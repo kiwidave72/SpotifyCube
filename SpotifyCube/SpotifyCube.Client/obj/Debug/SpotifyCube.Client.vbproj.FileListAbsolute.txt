@@ -1,0 +1,1 @@
+C:\Git\SpotifyCube\SpotifyCube\SpotifyCube.Client\bin\Debug\SpotifyCube.Client.exe.config
