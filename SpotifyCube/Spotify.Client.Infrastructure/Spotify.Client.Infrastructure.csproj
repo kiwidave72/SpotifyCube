@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7134446D-B55C-4328-80E8-C72D05A7E4BC}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Spotify.Client.Infrastructure</RootNamespace>
+    <AssemblyName>Spotify.Client.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugMockEnabled|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugMockEnabled\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Torshify.Client.Infrastructure.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\..\lib\Prism\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\lib\Unity\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Blend\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WpfShaderEffects">
+      <HintPath>..\..\lib\WpfShaderEffects\WpfShaderEffects.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AppConstants.cs" />
+    <Compile Include="Behaviors\DataGridRowActionBehavior.cs" />
+    <Compile Include="Behaviors\InactivityBehavior of T.cs" />
+    <Compile Include="Behaviors\InactivityFadeBehavior.cs" />
+    <Compile Include="Behaviors\InactivityScaleBehavior.cs" />
+    <Compile Include="Behaviors\ItemsControlDragDropBehavior.cs" />
+    <Compile Include="Behaviors\KeyboardBehavior.cs" />
+    <Compile Include="Behaviors\ListBoxItemActionBehavior.cs" />
+    <Compile Include="Behaviors\MouseDoubleClickBehavior.cs" />
+    <Compile Include="Collections\ObservableCollectionPlus.cs" />
+    <Compile Include="ConsoleManager.cs" />
+    <Compile Include="Controls\BlockBarBase.cs" />
+    <Compile Include="Controls\BlockBarRect.cs" />
+    <Compile Include="Behaviors\DataGridTriStateSortingBehavior.cs" />
+    <Compile Include="Behaviors\IgnoreMouseWheelBehavior.cs" />
+    <Compile Include="CollectionExtensions.cs" />
+    <Compile Include="Collections\NotifyCollection.cs" />
+    <Compile Include="Collections\SortedCollection.cs" />
+    <Compile Include="Collections\SortedObservableCollection.cs" />
+    <Compile Include="Commands\AutomaticCommand%28of T%29.cs" />
+    <Compile Include="Commands\AutomaticCommand.cs" />
+    <Compile Include="Commands\AutomaticCompositeCommand.cs" />
+    <Compile Include="Commands\CanExecuteChangedCore.cs" />
+    <Compile Include="Commands\CompositeCommand.cs" />
+    <Compile Include="Commands\INotifyPropertyChanged\INotifyPropertyChangedExtensions.cs" />
+    <Compile Include="Commands\INotifyPropertyChanged\NotifyPropertyChangedBase.cs" />
+    <Compile Include="Commands\INotifyPropertyChanged\NotifyPropertyChangedCore.cs" />
+    <Compile Include="Commands\INotifyPropertyChanged\PropertyChangedEventHandlerExtensions.cs" />
+    <Compile Include="Commands\ManualCommand%28of T%29.cs" />
+    <Compile Include="Commands\ManualCommand.cs" />
+    <Compile Include="Commands\MultiCommand.cs" />
+    <Compile Include="Commands\ProjectedCollection.cs" />
+    <Compile Include="Commands\SafeGCHandle.cs" />
+    <Compile Include="Commands\SimplePropertyPath.cs" />
+    <Compile Include="Commands\StaticCommand%28of T%29.cs" />
+    <Compile Include="Commands\StaticCommand.cs" />
+    <Compile Include="Commands\WeakCollection.cs" />
+    <Compile Include="Commands\WeakReference.cs" />
+    <Compile Include="Controls\AnimatingPanel.cs" />
+    <Compile Include="Controls\AnimatingTilePanel.cs" />
+    <Compile Include="Controls\BorderlessWindow.cs" />
+    <Compile Include="Controls\BusyIndicator.cs" />
+    <Compile Include="Controls\CommandBarContextMenu.cs" />
+    <Compile Include="Controls\CompositionTargetRenderingListening.cs" />
+    <Compile Include="Controls\DoubleUtilities.cs" />
+    <Compile Include="Controls\GeoHelper.cs" />
+    <Compile Include="Controls\Html2Flow\HtmlCssParser.cs" />
+    <Compile Include="Controls\Html2Flow\HtmlFromXamlConverter.cs" />
+    <Compile Include="Controls\Html2Flow\HtmlLexicalAnalyzer.cs" />
+    <Compile Include="Controls\Html2Flow\HtmlParser.cs" />
+    <Compile Include="Controls\Html2Flow\HtmlSchema.cs" />
+    <Compile Include="Controls\Html2Flow\HtmlToFlowDocumentConverter.cs" />
+    <Compile Include="Controls\Html2Flow\HtmlTokenType.cs" />
+    <Compile Include="Controls\Html2Flow\HtmlToXamlConverter.cs" />
+    <Compile Include="Controls\IconTreeView.cs" />
+    <Compile Include="Controls\LayeredPanel.cs" />
+    <Compile Include="Controls\DeferredValueSlider.cs" />
+    <Compile Include="Controls\PasswordBoxMonitor.cs" />
+    <Compile Include="Controls\SearchTextBox.cs" />
+    <Compile Include="Controls\SizeControlTemplate.cs" />
+    <Compile Include="Controls\SizeControlTemplateCollection.cs" />
+    <Compile Include="Controls\SizeTemplateControl.cs" />
+    <Compile Include="Controls\SprocketControl.xaml.cs">
+      <DependentUpon>SprocketControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Standard\ComGuids.cs" />
+    <Compile Include="Controls\Standard\CornerRadiusAnimation.cs" />
+    <Compile Include="Controls\Standard\CornerRadiusAnimationBase.cs" />
+    <Compile Include="Controls\Standard\Debug.cs" />
+    <Compile Include="Controls\Standard\DoubleUtil.cs" />
+    <Compile Include="Controls\Standard\DpiHelper.cs" />
+    <Compile Include="Controls\Standard\Enumerable2.cs" />
+    <Compile Include="Controls\Standard\ErrorCodes.cs" />
+    <Compile Include="Controls\Standard\FileWalker.cs" />
+    <Compile Include="Controls\Standard\GlassHelper.cs" />
+    <Compile Include="Controls\Standard\MergeableCollection.cs" />
+    <Compile Include="Controls\Standard\MessageWindow.cs" />
+    <Compile Include="Controls\Standard\MshtmlProvider.cs" />
+    <Compile Include="Controls\Standard\NativeMethods.cs" />
+    <Compile Include="Controls\Standard\NotifyingList.cs" />
+    <Compile Include="Controls\Standard\ShellProvider.cs" />
+    <Compile Include="Controls\Standard\SmallString.cs" />
+    <Compile Include="Controls\Standard\SmallUri.cs" />
+    <Compile Include="Controls\Standard\SplashScreen.cs" />
+    <Compile Include="Controls\Standard\StreamHelper.cs" />
+    <Compile Include="Controls\Standard\Utilities.cs" />
+    <Compile Include="Controls\Standard\Verify.cs" />
+    <Compile Include="Controls\Standard\WicProvider.cs" />
+    <Compile Include="Controls\Standard\WindowExtensions.cs" />
+    <Compile Include="Controls\SystemCommands.cs" />
+    <Compile Include="Controls\SystemParameters2.cs" />
+    <Compile Include="Controls\UIHelpers.cs" />
+    <Compile Include="Converters\EqualInstanceToBooleanConverter.cs" />
+    <Compile Include="Converters\StringToUpperConverter.cs" />
+    <Compile Include="CoreRegionNames.cs" />
+    <Compile Include="Events\NotificationEvent.cs" />
+    <Compile Include="Interfaces\IPlayer.cs" />
+    <Compile Include="Controls\LayeredStackPanel.cs" />
+    <Compile Include="Models\NavigationItem.cs" />
+    <Compile Include="Models\NavigationViewModelBase.cs" />
+    <Compile Include="Models\NotificationMessage.cs" />
+    <Compile Include="Models\ResourcedNavigationItemTemplateSelector.cs" />
+    <Compile Include="Models\TabViewModel.cs" />
+    <Compile Include="Models\vNextPlayerQueue.cs" />
+    <Compile Include="Resources\Icons\NextSongIcon.xaml.cs">
+      <DependentUpon>NextSongIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\NowPlayingIcon.xaml.cs">
+      <DependentUpon>NowPlayingIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\PauseIcon.xaml.cs">
+      <DependentUpon>PauseIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\PlayIcon.xaml.cs">
+      <DependentUpon>PlayIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\PlaylistIcon.xaml.cs">
+      <DependentUpon>PlaylistIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\PlayQueueIcon.xaml.cs">
+      <DependentUpon>PlayQueueIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\PreviousSongIcon.xaml.cs">
+      <DependentUpon>PreviousSongIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\RadioIcon.xaml.cs">
+      <DependentUpon>RadioIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\RepeatIcon.xaml.cs">
+      <DependentUpon>RepeatIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\ShuffleIcon.xaml.cs">
+      <DependentUpon>ShuffleIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Icons\StarIcon.xaml.cs">
+      <DependentUpon>StarIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util.cs" />
+    <Compile Include="Controls\WatermarkTextBox.cs" />
+    <Compile Include="Controls\WindowChrome.cs" />
+    <Compile Include="Controls\WindowChromeWorker.cs" />
+    <Compile Include="Controls\WpfUtil.cs" />
+    <Compile Include="Converters\BoolToVisibleOrHidden.cs" />
+    <Compile Include="Converters\ImageCacheConverter.cs" />
+    <Compile Include="Converters\InstanceToObjectTypeConverter.cs" />
+    <Compile Include="Converters\StringEmptyToVisibilityConverter.cs" />
+    <Compile Include="Converters\TimeSpanToTextConverter.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="Events\ApplicationInactivityEvent.cs" />
+    <Compile Include="Events\SystemInactivityEvent.cs" />
+    <Compile Include="Events\TrackCommandBarEvent.cs" />
+    <Compile Include="IdleTimeDetector.cs" />
+    <Compile Include="InactivityNotificator.cs" />
+    <Compile Include="Input\ExtendedMouseGesture.cs" />
+    <Compile Include="Input\ExtendedMouseBinding.cs" />
+    <Compile Include="Input\ExtendedMouseGestureConverter.cs" />
+    <Compile Include="Interfaces\Genre.cs" />
+    <Compile Include="Interfaces\IAlbumInformation.cs" />
+    <Compile Include="Interfaces\IArtistInformation.cs" />
+    <Compile Include="Interfaces\IBackdropService.cs" />
+    <Compile Include="Interfaces\IImage.cs" />
+    <Compile Include="Interfaces\IImageCacheService.cs" />
+    <Compile Include="Interfaces\INavigationItem.cs" />
+    <Compile Include="Interfaces\INavigationItemProvider.cs" />
+    <Compile Include="Interfaces\INotifyEnumerable.cs" />
+    <Compile Include="Interfaces\ISearch.cs" />
+    <Compile Include="Interfaces\ISearchProvider.cs" />
+    <Compile Include="Interfaces\ITab.cs" />
+    <Compile Include="Interfaces\ITabViewModel.cs" />
+    <Compile Include="Models\PlayerQueueItem.cs" />
+    <Compile Include="Models\CommandModel.cs" />
+    <Compile Include="Interfaces\IAlbum.cs" />
+    <Compile Include="Interfaces\IArtist.cs" />
+    <Compile Include="Interfaces\ICommandBar.cs" />
+    <Compile Include="Interfaces\IInitializable.cs" />
+    <Compile Include="Interfaces\IPlayerController.cs" />
+    <Compile Include="Interfaces\IPlayerQueue.cs" />
+    <Compile Include="Interfaces\IPlaylist.cs" />
+    <Compile Include="Interfaces\IPlaylistProvider.cs" />
+    <Compile Include="Interfaces\IPlaylistTrack.cs" />
+    <Compile Include="Interfaces\IStartable.cs" />
+    <Compile Include="Interfaces\ITrack.cs" />
+    <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="RegionNames.cs" />
+    <Compile Include="Models\CommandBar.cs" />
+    <Compile Include="Models\PlayerQueue.cs" />
+    <Compile Include="Services\BackdropService.cs" />
+    <Compile Include="Interfaces\IImageCacheEntry.cs" />
+    <Compile Include="Services\ImageCacheService.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\spotify-core-logo-96x96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\SprocketControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\NextSongIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\NowPlayingIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\PauseIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\PlayIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\PlaylistIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\PlayQueueIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\PreviousSongIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\RadioIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\RepeatIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\ShuffleIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Icons\StarIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\BorderlessWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\BusyIndicator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\CommandBarContextMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\DeferredValueSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\IconTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\SearchTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\WatermarkTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\darkwoodhw0.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

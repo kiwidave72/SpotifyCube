@@ -1,0 +1,132 @@
+﻿<UserControl
+    x:Class="Spotify.Client.Spotify.Views.Login.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Spotify.Client.Infrastructure.Controls;assembly=Spotify.Client.Infrastructure"
+    xmlns:Behaviors="clr-namespace:Spotify.Client.Infrastructure.Behaviors;assembly=Spotify.Client.Infrastructure"
+    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="300">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter
+            x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Image
+            Margin="8"
+            Width="75"
+            Height="75"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Source="pack://application:,,,/Spotify.Client.Infrastructure;component/Resources/Images/spotify-core-logo-96x96.png" />
+        <StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Width="250">
+            <TextBlock
+                FontSize="40"
+                Text="torshify"
+                Margin="-40,0,0,-10">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush
+                        StartPoint="0,0"
+                        EndPoint="0,1">
+                    <GradientStop
+                            Color="Orange"
+                            Offset="0" />
+                    <GradientStop
+                            Color="OrangeRed"
+                            Offset="1" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <TextBlock
+                Opacity="0.5"
+                FontSize="15"
+                Text="please sign in"
+                Margin="-20,0,0,8">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush
+                        StartPoint="0,0"
+                        EndPoint="0,1">
+                    <GradientStop
+                            Color="Orange"
+                            Offset="0" />
+                    <GradientStop
+                            Color="OrangeRed"
+                            Offset="1" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <Border
+                Visibility="{Binding HasLoginError, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Background="#CCFFFFFF"
+                BorderBrush="White"
+                BorderThickness="1"
+                CornerRadius="4"
+                MinHeight="40"
+                Margin="0,0,0,16">
+                <TextBlock
+                    Foreground="Black"
+                    Text="{Binding LoginError}"
+                    TextWrapping="Wrap"
+                    VerticalAlignment="Center" />
+            </Border>
+          
+            <local:WatermarkTextBox
+                x:Name="UserNameTextBox"
+                TabIndex="0"
+                Watermark="Username"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,0,0,4">
+                <Interactivity:Interaction.Behaviors>
+                    <Behaviors:KeyboardBehavior
+                        Key="Enter"
+                        Command="{Binding LoginCommand}"
+                        CommandParameter="{Binding ElementName=_passwordBox}" />
+                </Interactivity:Interaction.Behaviors>
+            </local:WatermarkTextBox>
+            <PasswordBox
+                x:FieldModifier="private"
+                TabIndex="1"
+                Name="_passwordBox"
+                Margin="0,0,0,4">
+                <Interactivity:Interaction.Behaviors>
+                    <Behaviors:KeyboardBehavior
+                        Key="Enter"
+                        Command="{Binding LoginCommand}"
+                        CommandParameter="{Binding ElementName=_passwordBox}" />
+                </Interactivity:Interaction.Behaviors>
+            </PasswordBox>
+            <TextBlock
+                FontSize="10"
+                Foreground="{DynamicResource ControlTextBrush}"
+                ToolTip="{Binding ForgotPasswordUrl}">
+                <Hyperlink
+                    NavigateUri="{Binding ForgotPasswordUrl}"
+                    RequestNavigate="OnForgotPasswordLinkClicked">
+                    Forgot your password?
+                </Hyperlink>
+            </TextBlock>
+            <DockPanel
+                LastChildFill="True"
+                Margin="0,4,0,0">
+                <CheckBox
+                    DockPanel.Dock="Left"
+                    Content="Remember me"
+                    IsChecked="{Binding RememberMe}"/>
+                <Button
+                    Content="Sign in"
+                    Command="{Binding LoginCommand}"
+                    CommandParameter="{Binding ElementName=_passwordBox}"
+                    HorizontalAlignment="Right" />
+            </DockPanel>
+        </StackPanel>
+        <local:BusyIndicator
+            IsBusy="{Binding IsLoggingIn}"
+            BusyContent="Logging in, please wait.." />
+    </Grid>
+</UserControl>

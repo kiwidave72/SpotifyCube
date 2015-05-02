@@ -1,0 +1,369 @@
+﻿<UserControl
+    x:Class="Spotify.Client.Modules.Core.Views.NowPlaying.NowPlayingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:Controls="clr-namespace:Spotify.Client.Infrastructure.Controls;assembly=Spotify.Client.Infrastructure"
+    xmlns:Core="clr-namespace:Spotify.Client.Modules.Core"
+    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:Behaviors="clr-namespace:Spotify.Client.Infrastructure.Behaviors;assembly=Spotify.Client.Infrastructure"
+    xmlns:Icons="clr-namespace:Spotify.Client.Infrastructure.Resources.Icons;assembly=Spotify.Client.Infrastructure"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    Content="{Binding}"
+    Background="Transparent">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="NowPlayingViewResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.ContentTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition
+                        Height="80" />
+                </Grid.RowDefinitions>
+
+                <Rectangle
+                    Grid.ColumnSpan="3"
+                    Grid.RowSpan="2"
+                    VerticalAlignment="Bottom"
+                    Height="150">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush
+                            StartPoint="0,0"
+                            EndPoint="0,1">
+                            <GradientStop
+                                Color="#00000000"
+                                Offset="0" />
+                            <GradientStop
+                                Color="#02000000"
+                                Offset="0.2" />
+                            <GradientStop
+                                Color="#A0000000"
+                                Offset="1" />
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                    <Interactivity:Interaction.Behaviors>
+                        <Behaviors:InactivityFadeBehavior />
+                    </Interactivity:Interaction.Behaviors>
+                </Rectangle>
+
+                <Viewbox
+                    Grid.ColumnSpan="3"
+                    Height="60"
+                    Width="60"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="15,-10,0,0">
+                    <Interactivity:Interaction.Behaviors>
+                        <Behaviors:InactivityFadeBehavior />
+                    </Interactivity:Interaction.Behaviors>
+                    <Button
+                        Controls:WindowChrome.IsHitTestVisibleInChrome="True"
+                        Width="30"
+                        Height="30"
+                        Style="{DynamicResource CircleIconButtonStyle}"
+                        Command="{Binding NavigateBackCommand}">
+                        <Canvas
+                            Width="20"
+                            Height="20"
+                            Canvas.Left="0"
+                            Canvas.Top="0">
+                            <Viewbox
+                                Width="15.9844"
+                                Height="13.3287"
+                                Canvas.Left="2.32805"
+                                Canvas.Top="3.02547">
+                                <Canvas
+                                    Width="15.9844"
+                                    Height="13.3287">
+                                    <Path
+                                        Width="15.9132"
+                                        Height="0"
+                                        Canvas.Left="0.0712929"
+                                        Canvas.Top="6.66203"
+                                        Stretch="Fill"
+                                        Data="F1 M 15.9844,6.66203L 0.0712929,6.66203" />
+                                    <Viewbox
+                                        Width="15.9844"
+                                        Height="13.3287"
+                                        Canvas.Left="0"
+                                        Canvas.Top="0">
+                                        <Canvas
+                                            Width="15.9844"
+                                            Height="13.3287">
+                                            <Rectangle
+                                                Width="11.5964"
+                                                Height="2.66477"
+                                                Canvas.Left="4.38801"
+                                                Canvas.Top="5.32965"
+                                                Stretch="Fill"
+                                                Fill="White" />
+                                            <Path
+                                                Width="10.2173"
+                                                Height="13.3241"
+                                                Canvas.Left="0"
+                                                Canvas.Top="0"
+                                                Stretch="Fill"
+                                                Fill="White"
+                                                Data="F1 M 4.88765,7.99442L 10.2173,13.3241L 6.70367,13.3241L 0.0712929,6.6917L 0,6.62041L 0.0712929,6.54911L 6.62039,0L 10.2173,0L 4.88765,5.32965L 4.88765,7.99442 Z " />
+                                        </Canvas>
+                                    </Viewbox>
+                                </Canvas>
+                            </Viewbox>
+                        </Canvas>
+                    </Button>
+                </Viewbox>
+
+                <DockPanel
+                    Grid.ColumnSpan="3"
+                    LastChildFill="True"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Margin="60">
+                    <DockPanel.Effect>
+                        <DropShadowEffect
+                            ShadowDepth="0"
+                            BlurRadius="40" />
+                    </DockPanel.Effect>
+                    <Border
+                        DockPanel.Dock="Left"
+                        Margin="8,0,8,0"
+                        Padding="2"
+                        Background="{DynamicResource ControlTextBrush}"
+                        VerticalAlignment="Top"
+                        Height="130"
+                        Width="130">
+                        <ContentControl
+                            Content="{Binding CurrentTrack.Track.Album.CoverArt, Converter={StaticResource ThumbnailCoverArtImageCacheConverter}}">
+                            <ContentControl.ContentTemplate>
+                                <DataTemplate>
+                                    <Image
+                                        Width="125"
+                                        Height="125"
+                                        Source="{Binding Bitmap}" />
+                                </DataTemplate>
+                            </ContentControl.ContentTemplate>
+                        </ContentControl>
+                    </Border>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel
+                            Grid.Row="0">
+                            <TextBlock
+                                Foreground="{DynamicResource ControlTextBrush}"
+                                Text="{Binding CurrentTrack.Track.Album.Artist.Name, Converter={StaticResource StringToUpperConverter}}"
+                                FontSize="25"
+                                FontWeight="SemiBold" />
+                            <TextBlock
+                                Foreground="{DynamicResource ControlTextBrush}"
+                                Text="{Binding CurrentTrack.Track.Album.Name, Converter={StaticResource StringToUpperConverter}}"
+                                FontWeight="Light"
+                                FontSize="25" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Row="1"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                Foreground="{DynamicResource ControlTextBrush}"
+                                Text="{Binding CurrentTrack.Track.Name}"
+                                FontSize="25" />
+                        </StackPanel>
+                    </Grid>
+                </DockPanel>
+
+                <Grid
+                    Grid.ColumnSpan="3"
+                    Margin="0,0,16,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Height="250" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Grid.Row="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Background="#DD000000"
+                        Padding="4,16,0,16">
+                        <Interactivity:Interaction.Behaviors>
+                            <Behaviors:InactivityFadeBehavior />
+                            <Behaviors:InactivityScaleBehavior
+                                InDuration="0:0:0.1" />
+                        </Interactivity:Interaction.Behaviors>
+                        <ListBox
+                            Name="Lb"
+                            Background="{x:Null}"
+                            BorderThickness="0"
+                            ItemsSource="{Binding Playlist}"
+                            ItemTemplate="{StaticResource NowPlaying_TrackListItemTemplate}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            Width="350">
+                            <Interactivity:Interaction.Behaviors>
+                                <Behaviors:ListBoxItemActionBehavior
+                                    Command="{Binding JumpToTrackCommand}"
+                                    CommandParameter="{Binding SelectedItem, ElementName=Lb}" />
+                            </Interactivity:Interaction.Behaviors>
+                            <ListBox.Resources>
+                                <SolidColorBrush
+                                    x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                                    Color="#20FFFFFF" />
+                                <SolidColorBrush
+                                    x:Key="{x:Static SystemColors.ControlBrushKey}"
+                                    Color="#20FFFFFF" />
+                                <SolidColorBrush
+                                    x:Key="{x:Static SystemColors.ControlTextBrushKey}"
+                                    Color="White" />
+                            </ListBox.Resources>
+                        </ListBox>
+                    </Border>
+                </Grid>
+
+                <Grid
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center">
+                    <Interactivity:Interaction.Behaviors>
+                        <Behaviors:InactivityFadeBehavior />
+                    </Interactivity:Interaction.Behaviors>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Grid.Row="0"
+                        VerticalAlignment="Bottom">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            Foreground="{DynamicResource ControlTextBrush}"
+                            Text="{Binding CurrentTrack.Track.Name}" />
+                    </Grid>
+                    <Controls:DeferredValueSlider
+                        Grid.Row="1"
+                        Minimum="0"
+                        Maximum="{Binding CurrentTrack.Track.Duration.TotalSeconds, Mode=OneWay}"
+                        Value="{Binding Player.DurationPlayed.TotalSeconds, Mode=OneWay}"
+                        RequestValueChanged="OnRequestSeek"/>
+
+                    <Grid
+                        Grid.Row="2"
+                        VerticalAlignment="Top">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            Foreground="{DynamicResource ControlTextBrush}"
+                            FontSize="12"
+                            Text="{Binding Player.DurationPlayed, Converter={StaticResource TimeSpanToTextConverter}}" />
+                        <TextBlock
+                            HorizontalAlignment="Right"
+                            FontSize="12"
+                            Foreground="{DynamicResource ControlTextBrush}">
+                        <TextBlock.Text>
+                            <MultiBinding
+                                    Converter="{StaticResource TimeSpanLeftConverter}">
+                                <Binding
+                                        Path="Player.Playlist.Current.Track.Duration" />
+                                <Binding
+                                        Path="Player.DurationPlayed" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                        </TextBlock>
+                    </Grid>
+                </Grid>
+
+                <StackPanel
+                    Grid.ColumnSpan="3"
+                    Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0,0,16,0">
+                    <Interactivity:Interaction.Behaviors>
+                        <Behaviors:InactivityFadeBehavior />
+                    </Interactivity:Interaction.Behaviors>
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <Button
+                            Style="{DynamicResource SuperSimpleButtonStyle}"
+                            Command="{x:Static Core:CoreCommands+Player.ToggleRepeatCommand}">
+                            <Icons:RepeatIcon />
+                        </Button>
+                        <Button
+                            Style="{DynamicResource SuperSimpleButtonStyle}"
+                            Command="{x:Static Core:CoreCommands+Player.ToggleShuffleCommand}">
+                            <Icons:ShuffleIcon />
+                        </Button>
+                        <Button
+                            Margin="8,0,1,0"
+                            Width="25"
+                            Height="25"
+                            Style="{DynamicResource CircleIconButtonStyle}"
+                            Command="{x:Static Core:CoreCommands+Player.PreviousCommand}">
+                            <Icons:PreviousSongIcon />
+                        </Button>
+                        <Button
+                            Margin="1,0,1,0"
+                            Width="34"
+                            Height="34"
+                            Style="{DynamicResource CircleIconButtonStyle}"
+                            Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Command="{x:Static Core:CoreCommands+Player.PauseCommand}">
+                            <Viewbox
+                                Margin="5">
+                                <Icons:PauseIcon />
+                            </Viewbox>
+                        </Button>
+                        <Button
+                            Margin="1,0,1,0"
+                            Width="34"
+                            Height="34"
+                            Style="{DynamicResource CircleIconButtonStyle}"
+                            Visibility="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Command="{x:Static Core:CoreCommands+Player.PlayCommand}">
+                            <Viewbox
+                                Margin="5">
+                                <Icons:PlayIcon />
+                            </Viewbox>
+                        </Button>
+                        <Button
+                            Margin="1,0,1,0"
+                            Width="25"
+                            Height="25"
+                            Style="{DynamicResource CircleIconButtonStyle}"
+                            Command="{x:Static Core:CoreCommands+Player.NextCommand}">
+                            <Icons:NextSongIcon />
+                        </Button>
+                    </StackPanel>
+                    <Slider
+                        Margin="8,0,8,0"
+                        Minimum="0.0"
+                        Maximum="1.0"
+                        SmallChange="0.1"
+                        LargeChange="0.2"
+                        IsMoveToPointEnabled="True"
+                        Value="{Binding Player.Volume}"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </UserControl.ContentTemplate>
+</UserControl>

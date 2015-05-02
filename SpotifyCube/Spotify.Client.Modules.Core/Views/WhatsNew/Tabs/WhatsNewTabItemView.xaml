@@ -1,0 +1,114 @@
+﻿<UserControl
+    x:Class="Spotify.Client.Modules.Core.Views.WhatsNew.Tabs.WhatsNewTabItemView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:Converters="clr-namespace:Spotify.Client.Infrastructure.Converters;assembly=Spotify.Client.Infrastructure"
+    xmlns:Core="clr-namespace:Spotify.Client.Modules.Core"
+    xmlns:Controls="clr-namespace:Spotify.Client.Infrastructure.Controls;assembly=Spotify.Client.Infrastructure"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="300">
+    <UserControl.Resources>
+        <Converters:ImageCacheConverter
+            x:Key="ThumbnailCoverArtImageCacheConverter"
+            DecodeHeight="125"
+            DecodeWidth="125" />
+
+        <BooleanToVisibilityConverter
+            x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Button
+            Margin="4"
+            Content="More"
+            Command="{Binding GetMoreAlbumsCommand}"
+            HorizontalAlignment="Right" />
+        <Controls:LayeredPanel
+            Grid.Row="1">
+            <ScrollViewer>
+                <ItemsControl
+                    Grid.Row="1"
+                    ItemsSource="{Binding Albums}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Controls:AnimatingTilePanel
+                                ItemHeight="175"
+                                ItemWidth="150" />
+                            <!--<WrapPanel
+                            ItemHeight="175"
+                            ItemWidth="150" />-->
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel
+                                LastChildFill="True">
+                                <StackPanel
+                                    Margin="8,0,8,0"
+                                    DockPanel.Dock="Bottom">
+                                    <TextBlock>
+                                    <Hyperlink
+                                            Foreground="{DynamicResource ControlTextBrush}"
+                                            Command="{x:Static Core:CoreCommands+Views.GoToAlbumCommand}"
+                                            CommandParameter="{Binding}">
+                                         <TextBlock
+                                                Text="{Binding Name}"
+                                                TextTrimming="CharacterEllipsis" />
+                                    </Hyperlink>
+                                </TextBlock>
+                                    <TextBlock>
+                                    <Hyperlink
+                                            Foreground="{DynamicResource DisabledControlTextBrush}"
+                                            Command="{x:Static Core:CoreCommands+Views.GoToArtistCommand}"
+                                            CommandParameter="{Binding Artist}">
+                                         <TextBlock
+                                                Text="{Binding Artist.Name}"
+                                                TextTrimming="CharacterEllipsis" />
+                                    </Hyperlink>
+                                </TextBlock>
+                                </StackPanel>
+                                <Border
+                                    Margin="8,8,8,2"
+                                    Padding="4"
+                                    Background="{DynamicResource ControlTextBrush}"
+                                    VerticalAlignment="Top">
+                                    <Button
+                                        Style="{DynamicResource SuperSimpleButtonStyle}"
+                                        Command="{x:Static Core:CoreCommands+Views.GoToAlbumCommand}"
+                                        CommandParameter="{Binding}"
+                                        Cursor="Hand"
+                                        Content="{Binding CoverArt, Converter={StaticResource ThumbnailCoverArtImageCacheConverter}}">
+                                        <ContentControl.ContentTemplate>
+                                            <DataTemplate>
+                                                <Image
+                                                    Width="125"
+                                                    Height="125"
+                                                    Source="{Binding Bitmap}" />
+                                            </DataTemplate>
+                                        </ContentControl.ContentTemplate>
+                                    </Button>
+                                </Border>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </ScrollViewer>
+
+            <Controls:SprocketControl
+                Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                IsBusy="{Binding IsLoading}"
+                Width="48"
+                Height="48"
+                Interval="70" />
+
+        </Controls:LayeredPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,31 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Models="clr-namespace:Spotify.Client.Infrastructure.Models;assembly=Spotify.Client.Infrastructure"
+    xmlns:EchoNest="clr-namespace:Spotify.Client.Modules.EchoNest"
+    xmlns:Icons="clr-namespace:Spotify.Client.Infrastructure.Resources.Icons;assembly=Spotify.Client.Infrastructure">
+
+    <DataTemplate
+        DataType="{x:Type Models:HeaderedNavigationItem}">
+        <TextBlock
+            Text="{Binding Header}" />
+    </DataTemplate>
+
+    <Models:ResourcedNavigationItemTemplateSelector
+        x:Key="IconTemplateSelector">
+        <Models:ResourcedNavigationItemTemplateSelector.Templates>
+            <ResourceDictionary>
+                <DataTemplate
+                    x:Key="{x:Static EchoNest:EchoNestViews.DiscoverMusicView}">
+                    <Icons:RadioIcon
+                        Foreground="{DynamicResource ControlTextBrush}" />
+                </DataTemplate>
+                <DataTemplate
+                    x:Key="{x:Static EchoNest:EchoNestViews.SimilarArtistView}">
+                    <Icons:RadioIcon
+                        Foreground="{DynamicResource ControlTextBrush}" />
+                </DataTemplate>
+            </ResourceDictionary>
+        </Models:ResourcedNavigationItemTemplateSelector.Templates>
+    </Models:ResourcedNavigationItemTemplateSelector>
+</ResourceDictionary>

@@ -1,0 +1,158 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Threading;
+
+using Microsoft.Practices.Prism.ViewModel;
+
+using ITorshifyAlbum = Spotify.Client.Infrastructure.Interfaces.IAlbum;
+
+using ITorshifyArtist = Spotify.Client.Infrastructure.Interfaces.IArtist;
+
+using ITorshifyTrack = Spotify.Client.Infrastructure.Interfaces.ITrack;
+using Torshify;
+
+namespace Spotify.Client.Spotify.Services
+{
+    public class Track : NotificationObject, ITorshifyTrack
+    {
+        #region Fields
+
+        private readonly Dispatcher _dispatcher;
+
+        private Lazy<Album> _album;
+        private Lazy<IEnumerable<Artist>> _artists;
+        private Lazy<TimeSpan> _duration;
+
+        #endregion Fields
+
+        #region Constructors
+
+        public Track(ITrack track, Dispatcher dispatcher)
+        {
+            _dispatcher = dispatcher;
+            InternalTrack = track;
+
+            _album = new Lazy<Album>(() => new Album(InternalTrack.Album, _dispatcher));
+            _artists = new Lazy<IEnumerable<Artist>>(GetArtists);
+            _duration = new Lazy<TimeSpan>(() => InternalTrack.Duration);
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
+        public ITorshifyAlbum Album
+        {
+            get
+            {
+                if (InternalTrack.IsValid() && InternalTrack.IsLoaded)
+                {
+                    return _album.Value;
+                }
+
+                return null;
+            }
+        }
+
+        public IEnumerable<ITorshifyArtist> Artists
+        {
+            get
+            {
+                if (InternalTrack.IsValid() && InternalTrack.IsLoaded)
+                {
+                    return _artists.Value;
+                }
+
+                return null;
+            }
+        }
+
+        public int Disc
+        {
+            get { return InternalTrack.Disc; }
+        }
+
+        public TimeSpan Duration
+        {
+            get
+            {
+                if (InternalTrack.IsValid() && InternalTrack.IsLoaded)
+                {
+                    return _duration.Value;
+                }
+
+                return TimeSpan.Zero;
+            }
+        }
+
+        public int ID
+        {
+            get { return InternalTrack.GetHashCode(); }
+        }
+
+        public int Index
+        {
+            get { return InternalTrack.Index; }
+        }
+
+        public ITrack InternalTrack
+        {
+            get;
+            private set;
+        }
+
+        public bool IsAvailable
+        {
+            get { return InternalTrack.Availability == TrackAvailablity.Available; }
+        }
+
+        public bool IsStarred
+        {
+            get { return InternalTrack.IsStarred; }
+            set
+            {
+                if (InternalTrack.IsStarred != value)
+                {
+                    InternalTrack.IsStarred = value;
+                    RaisePropertyChanged("IsStarred");
+                }
+            }
+        }
+
+        public string Name
+        {
+            get { return InternalTrack.Name; }
+        }
+
+        public int Popularity
+        {
+            get { return InternalTrack.Popularity; }
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        public virtual void Refresh()
+        {
+            RaisePropertyChanged(
+                "Album",
+                "Artists",
+                "Name",
+                "Popularity",
+                "Index",
+                "Disc",
+                "Duration",
+                "IsAvailable",
+                "IsStarred");
+        }
+
+        private IEnumerable<Artist> GetArtists()
+        {
+            return InternalTrack.Artists.Select(artist => new Artist(artist, _dispatcher)).ToList();
+        }
+
+        #endregion Methods
+    }
+}

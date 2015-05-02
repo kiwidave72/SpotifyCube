@@ -1,0 +1,20 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary
+            Source="pack://application:,,,/Spotify.Client.Infrastructure;component/Themes/BorderlessWindow.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/Spotify.Client.Infrastructure;component/Themes/BusyIndicator.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/Spotify.Client.Infrastructure;component/Themes/CommandBarContextMenu.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/Spotify.Client.Infrastructure;component/Themes/WatermarkTextBox.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/Spotify.Client.Infrastructure;component/Themes/SearchTextBox.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/Spotify.Client.Infrastructure;component/Themes/DeferredValueSlider.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/Spotify.Client.Infrastructure;component/Themes/IconTreeView.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

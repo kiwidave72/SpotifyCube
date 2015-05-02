@@ -1,0 +1,208 @@
+﻿<UserControl
+    x:Class="Spotify.Client.Modules.Core.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:prism="clr-namespace:Microsoft.Practices.Prism.Regions;assembly=Microsoft.Practices.Prism"
+    xmlns:Controls="clr-namespace:Spotify.Client.Infrastructure.Controls;assembly=Spotify.Client.Infrastructure"
+    xmlns:Infrastructure="clr-namespace:Spotify.Client.Infrastructure;assembly=Spotify.Client.Infrastructure"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style
+            x:Key="NavigationButtonStyle"
+            TargetType="{x:Type Button}">
+            <Setter
+                Property="Background"
+                Value="Transparent" />
+            <Setter
+                Property="BorderBrush"
+                Value="#FFCCCCCC" />
+            <Setter
+                Property="BorderThickness"
+                Value="1" />
+            <Setter
+                Property="Foreground"
+                Value="{DynamicResource ControlTextBrush}" />
+            <Setter
+                Property="Template">
+                <Setter.Value>
+                    <ControlTemplate
+                        TargetType="{x:Type Button}">
+                        <Grid
+                            Background="{TemplateBinding Background}"
+                            Height="20"
+                            Width="20">
+                            <Ellipse
+                                Name="Circle"
+                                Stroke="{TemplateBinding BorderBrush}"
+                                StrokeThickness="1.5">
+                            </Ellipse>
+                            <ContentPresenter
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Margin="1" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger
+                                Property="IsPressed"
+                                Value="True">
+                                <Setter
+                                    Property="BorderBrush"
+                                    Value="White" />
+                                <Setter
+                                    Property="BorderThickness"
+                                    Value="4" />
+                                <Setter
+                                    TargetName="Circle"
+                                    Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect
+                                            Color="White"
+                                            Direction="0"
+                                            ShadowDepth="0"
+                                            BlurRadius="5" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger
+                    Property="IsMouseOver"
+                    Value="True">
+                    <Setter
+                        Property="BorderBrush"
+                        Value="White" />
+                </Trigger>
+                <Trigger
+                    Property="IsPressed"
+                    Value="True">
+                    <Setter
+                        Property="BorderBrush"
+                        Value="White" />
+                </Trigger>
+                <Trigger
+                    Property="IsEnabled"
+                    Value="False">
+                    <Setter
+                        Property="BorderBrush"
+                        Value="#FF999999" />
+                    <Setter
+                        Property="Foreground"
+                        Value="#FF999999" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition />
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="175"
+                MinWidth="100" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <DockPanel
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Margin="4,4,0,0"
+            LastChildFill="True">
+            <StackPanel
+                DockPanel.Dock="Left"
+                Orientation="Horizontal">
+                <Button
+                    Controls:WindowChrome.IsHitTestVisibleInChrome="True"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Command="{Binding GoBackCommand}"
+                    Margin="0,0,2,0">
+                    <Path
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="M0,4 L4,0 M0,4 L4,8 M0,4 L9,4"
+                        Fill="#FFF4F4F5"
+                        Margin="0"
+                        Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                        StrokeThickness="2"
+                        StrokeStartLineCap="Round" />
+                </Button>
+                <Button
+                    Controls:WindowChrome.IsHitTestVisibleInChrome="True"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Command="{Binding GoForwardCommand}"
+                    Margin="0,0,8,0">
+                    <Path
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="M0,4 L4,0 M0,4 L4,8 M0,4 L9,4"
+                        Fill="#FFF4F4F5"
+                        Margin="0"
+                        Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                        StrokeThickness="2"
+                        RenderTransformOrigin="0.5,0.5"
+                        StrokeStartLineCap="Round"
+                        StrokeEndLineCap="Square">
+                        <Path.RenderTransform>
+                            <ScaleTransform
+                                ScaleX="-1" />
+                        </Path.RenderTransform>
+                    </Path>
+                </Button>
+                <Controls:SearchTextBox
+                    Controls:WindowChrome.IsHitTestVisibleInChrome="True"
+                    Name="_searchInputField"
+                    Width="150"
+                    Watermark="Search"
+                    Text="{Binding InputFieldText, UpdateSourceTrigger=PropertyChanged}"
+                    SearchCommand="{Binding SearchCommand}"
+                    SearchCommandParameter="{Binding Text, ElementName=_searchInputField}"
+                    Margin="0,0,2,0" />
+            </StackPanel>
+            <ContentControl
+                prism:RegionManager.RegionName="{x:Static Infrastructure:CoreRegionNames.TopMusicRegion}"
+                Margin="4,0,0,0" />
+        </DockPanel>
+
+        <ScrollViewer
+            Grid.Column="0"
+            Grid.Row="1"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto"
+            Margin="0,4,4,0">
+            <ItemsControl
+                prism:RegionManager.RegionName="{x:Static Infrastructure:CoreRegionNames.LeftMusicRegion}" />
+        </ScrollViewer>
+
+        <GridSplitter
+            Grid.Column="0"
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            Background="Transparent"
+            Width="10" />
+
+        <ContentControl
+            Grid.Column="1"
+            Grid.Row="1"
+            prism:RegionManager.RegionName="{x:Static Infrastructure:CoreRegionNames.MainMusicRegion}"
+            Margin="0,4,4,0" />
+
+        <ContentControl
+            prism:RegionManager.RegionName="{x:Static Infrastructure:CoreRegionNames.BottomMusicRegion}"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch" />
+    </Grid>
+</UserControl>
