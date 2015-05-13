@@ -1,6 +1,4 @@
-﻿using Torshify;
-
-namespace Spotify.Client.Spotify.Services
+﻿namespace Spotify.Client.Spotify.Services
 {
     public static class SessionObjectExtensions
     {

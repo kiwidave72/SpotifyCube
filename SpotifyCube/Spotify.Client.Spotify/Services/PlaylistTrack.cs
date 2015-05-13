@@ -3,8 +3,6 @@ using ITorshifyPlaylist = Spotify.Client.Infrastructure.Interfaces.IPlaylist;
 
 using ITorshifyPlaylistTrack = Spotify.Client.Infrastructure.Interfaces.IPlaylistTrack;
 
-using Torshify;
-
 namespace Spotify.Client.Spotify.Services
 {
     public class PlaylistTrack : Track, ITorshifyPlaylistTrack

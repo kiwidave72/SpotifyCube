@@ -15,8 +15,6 @@ using ITorshifyArtist = Spotify.Client.Infrastructure.Interfaces.IArtist;
 
 using ITorshifyTrack = Spotify.Client.Infrastructure.Interfaces.ITrack;
 
-using Torshify;
-
 namespace Spotify.Client.Spotify.Services
 {
     public class ArtistInformation : NotificationObject, IArtistInformation

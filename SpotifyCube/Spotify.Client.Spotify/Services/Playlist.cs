@@ -11,8 +11,6 @@ using ITorshifyPlaylist = Spotify.Client.Infrastructure.Interfaces.IPlaylist;
 
 using ITorshifyPlaylistTrack = Spotify.Client.Infrastructure.Interfaces.IPlaylistTrack;
 
-
-
 namespace Spotify.Client.Spotify.Services
 {
     [DebuggerDisplay("{Name}")]
@@ -203,7 +201,7 @@ namespace Spotify.Client.Spotify.Services
             }
         }
 
-        private void OnDescriptionChanged(object sender, Torshify.DescriptionEventArgs e)
+        private void OnDescriptionChanged(object sender, DescriptionEventArgs e)
         {
             RaisePropertyChanged("Description");
         }
@@ -235,7 +233,7 @@ namespace Spotify.Client.Spotify.Services
             RaisePropertyChanged("IsCollaborative");
         }
 
-        private void OnTracksAdded(object sender, Torshify.TracksAddedEventArgs e)
+        private void OnTracksAdded(object sender, TracksAddedEventArgs e)
         {
             for (int i = 0; i < e.Tracks.Length; i++)
             {
@@ -249,7 +247,7 @@ namespace Spotify.Client.Spotify.Services
             }
         }
 
-        private void OnTracksMoved(object sender, Torshify.TracksMovedEventArgs e)
+        private void OnTracksMoved(object sender, TracksMovedEventArgs e)
         {
             for (int i = 0; i < e.TrackIndices.Length; i++)
             {
@@ -257,7 +255,7 @@ namespace Spotify.Client.Spotify.Services
             }
         }
 
-        private void OnTracksRemoved(object sender, Torshify.TracksRemovedEventArgs e)
+        private void OnTracksRemoved(object sender, TracksRemovedEventArgs e)
         {
             for (int i = 0; i < e.TrackIndices.Length; i++)
             {
@@ -265,7 +263,7 @@ namespace Spotify.Client.Spotify.Services
             }
         }
 
-        private void OnUpdateInProgress(object sender, Torshify.PlaylistUpdateEventArgs e)
+        private void OnUpdateInProgress(object sender, PlaylistUpdateEventArgs e)
         {
             IsUpdating = !e.IsDone;
         }

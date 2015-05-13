@@ -8,9 +8,6 @@ using Spotify.Client.Infrastructure.Events;
 using Spotify.Client.Infrastructure.Interfaces;
 using Spotify.Client.Infrastructure.Models;
 
-using Torshify;
-
-
 namespace Spotify.Client.Spotify.Services
 {
     public class PlayerController : NotificationObject, IPlayerController
@@ -96,7 +93,7 @@ namespace Spotify.Client.Spotify.Services
                     {
                         _timer.Start();
 
-                        _eventAggregator.GetEvent<NotificationEvent>().Publish(new NotificationMessage(string.Empty));
+                      //  _eventAggregator.GetEvent<NotificationEvent>().Publish(new NotificationMessage(string.Empty));
                     }
                     else
                     {
@@ -230,7 +227,7 @@ namespace Spotify.Client.Spotify.Services
                         track.InternalTrack.Play();
                     }else
                     {
-                        _eventAggregator.GetEvent<NotificationEvent>().Publish(new NotificationMessage(_lastLoadStatus.Value.GetMessage()));
+                      //  _eventAggregator.GetEvent<NotificationEvent>().Publish(new NotificationMessage(_lastLoadStatus.Value.GetMessage()));
                         _logger.Log(_lastLoadStatus.Value.GetMessage(), Category.Warn, Priority.Medium);
                     }
 

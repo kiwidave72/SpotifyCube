@@ -9,7 +9,6 @@ using Microsoft.Practices.Prism.ViewModel;
 using Spotify.Client.Infrastructure;
 using Spotify.Client.Infrastructure.Commands;
 
-
 namespace Spotify.Client.Spotify.Views.Login
 {
     public class LoginViewModel : NotificationObject, IRegionMemberLifetime
@@ -19,7 +18,7 @@ namespace Spotify.Client.Spotify.Views.Login
         private readonly Dispatcher _dispatcher;
         private readonly IRegionManager _regionManager;
         private readonly ILoggerFacade _logger;
-        private readonly Torshify.ISession _session;
+        private readonly ISession _session;
 
         private bool _hasLoginError;
         private bool _isLoggingIn;
@@ -32,7 +31,7 @@ namespace Spotify.Client.Spotify.Views.Login
         #region Constructors
 
         public LoginViewModel(
-            Torshify.ISession session,
+            ISession session,
             IRegionManager regionManager,
             ILoggerFacade logger,
             Dispatcher dispatcher)
@@ -180,7 +179,7 @@ namespace Spotify.Client.Spotify.Views.Login
             _session.Login(UserName, pbox.Password, RememberMe);
         }
 
-        private void OnLoginComplete(object sender, Torshify.SessionEventArgs e)
+        private void OnLoginComplete(object sender, SessionEventArgs e)
         {
             IsLoggingIn = false;
 

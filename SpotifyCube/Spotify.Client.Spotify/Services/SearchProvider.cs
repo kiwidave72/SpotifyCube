@@ -3,7 +3,6 @@ using System.Windows.Threading;
 using Spotify.Client.Infrastructure.Interfaces;
 
 using ITorshifySearch = Spotify.Client.Infrastructure.Interfaces.ISearch;
-using Torshify;
 
 namespace Spotify.Client.Spotify.Services
 {

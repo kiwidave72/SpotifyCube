@@ -11,8 +11,8 @@ using Spotify.Client.Infrastructure;
 using Spotify.Client.Infrastructure.Interfaces;
 using Spotify.Client.Spotify.Services;
 using Spotify.Client.Spotify.Views.Login;
-using Spotify.Client.Spotify.Views.Playlists;
-using Torshify;
+//using Spotify.Client.Spotify.Views.Playlists;
+
 
 namespace Spotify.Client.Spotify
 {
@@ -49,11 +49,14 @@ namespace Spotify.Client.Spotify
 
         public static void InitializeLibspotify()
         {
+           // Session.ConnectionError += ConnectionError;
+            
             Session = SessionFactory.CreateSession(
-                Constants.ApplicationKey,
-                Constants.CacheFolder,
-                Constants.SettingsFolder,
-                Constants.UserAgent);
+                    Constants.ApplicationKey,
+                    Constants.CacheFolder,
+                    Constants.SettingsFolder,
+                    Constants.UserAgent);
+
 
             Application.Current.Exit += delegate
             {
@@ -83,13 +86,21 @@ namespace Spotify.Client.Spotify
             _container.RegisterType<ISearchProvider, SearchProvider>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IPlayer, NAudioPlayer>(new ContainerControlledLifetimeManager());
             _container.RegisterType<LoginView>("LoginView");
-            _container.RegisterType<PlaylistNavigationView>("SpotifyPlaylistNavigation");
+            //_container.RegisterType<PlaylistNavigationView>("SpotifyPlaylistNavigation");
             _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(LoginView));
-            _regionManager.RegisterViewWithRegion("Navigation", typeof(PlaylistNavigationView));
+            //_regionManager.RegisterViewWithRegion("Navigation", typeof(PlaylistNavigationView));
             _container.Resolve<SpotifyLogging>().Initialize();
             _container.Resolve<SpotifyLinkNavigator>().Initialize();
         }
 
         #endregion Public Methods
+
+        private void ConnectionError(object sender, SessionEventArgs e)
+        {
+            if (e.Status != Error.OK)
+            {
+                Console.WriteLine("Connection error: " + e.Message, ConsoleColor.Red);
+            }
+        }
     }
 }

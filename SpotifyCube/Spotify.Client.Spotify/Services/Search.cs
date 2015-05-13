@@ -15,7 +15,6 @@ using ITorshifySearch = Spotify.Client.Infrastructure.Interfaces.ISearch;
 
 using ITorshifyTrack = Spotify.Client.Infrastructure.Interfaces.ITrack;
 
-
 namespace Spotify.Client.Spotify.Services
 {
     public class Search : NotificationObject, ITorshifySearch
@@ -165,7 +164,7 @@ namespace Spotify.Client.Spotify.Services
 
         #region Methods
 
-        private void OnSearchCompleted(object sender, Torshify.SearchEventArgs e)
+        private void OnSearchCompleted(object sender, SearchEventArgs e)
         {
             ISearch search = (ISearch)sender;
             _dispatcher.BeginInvoke(new Action<ISearch>(LoadSearchData), DispatcherPriority.Background, search);

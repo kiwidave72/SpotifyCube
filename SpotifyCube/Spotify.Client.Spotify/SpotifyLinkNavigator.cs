@@ -6,7 +6,6 @@ using System.Windows.Navigation;
 using Spotify.Client.Infrastructure.Interfaces;
 using Spotify.Client.Modules.Core;
 using Spotify.Client.Spotify.Services;
-using Torshify;
 
 namespace Spotify.Client.Spotify
 {

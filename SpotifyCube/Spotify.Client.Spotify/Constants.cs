@@ -4,9 +4,9 @@ using Spotify.Client.Infrastructure;
 
 namespace Spotify.Client.Spotify
 {
-    internal static class Constants
+    public static class Constants
     {
-        internal static readonly byte[] ApplicationKey = new Byte[]
+        public static readonly byte[] ApplicationKey = new Byte[]
         {
             0x01, 0x07, 0xB1, 0x54, 0xDA, 0x0E, 0xE3, 0x05, 0xDF, 0x77, 0x21, 0x68, 0x6A, 0xF9, 0x4C, 0x56,
             0x97, 0x0D, 0xDE, 0xE9, 0xC7, 0xBA, 0x2D, 0x16, 0xCC, 0x08, 0xE4, 0x9F, 0xCE, 0x6D, 0x48, 0x65,
@@ -31,18 +31,23 @@ namespace Spotify.Client.Spotify
             0xE9
         };
 
-        internal const string UserAgent = "torshify";
+        public const string UserAgent = "torshify";
 
-        internal static readonly string LogFolder = Path.Combine(
-            AppConstants.AppDataFolder,
+        public static readonly string AppDataFolder = Path.Combine(
+         Environment.CurrentDirectory,
+         "Torshify");
+
+
+        public static readonly string LogFolder = Path.Combine(
+            AppDataFolder,
             "Log");
 
-        internal static readonly string CacheFolder = Path.Combine(
-            AppConstants.AppDataFolder,
+        public static readonly string CacheFolder = Path.Combine(
+            AppDataFolder,
             "SpotifyCache");
 
-        internal static readonly string SettingsFolder = Path.Combine(
-            AppConstants.AppDataFolder,
+        public static readonly string SettingsFolder = Path.Combine(
+            AppDataFolder,
             "SpotifySettings");
     }
 }

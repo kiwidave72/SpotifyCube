@@ -7,14 +7,13 @@ using Spotify.Client.Infrastructure.Interfaces;
 
 using ITorshifyPlaylist = Spotify.Client.Infrastructure.Interfaces.IPlaylist;
 
-
 namespace Spotify.Client.Spotify.Services
 {
     public class PlaylistProvider : IPlaylistProvider
     {
         #region Fields
 
-        private readonly Torshify.ISession _session;
+        private readonly ISession _session;
         private readonly Dispatcher _dispatcher;
         private readonly ILoggerFacade _logger;
 
@@ -25,7 +24,7 @@ namespace Spotify.Client.Spotify.Services
         #region Constructors
 
         public PlaylistProvider(
-            Torshify.ISession session, 
+            ISession session, 
             Dispatcher dispatcher,
             ILoggerFacade logger)
         {

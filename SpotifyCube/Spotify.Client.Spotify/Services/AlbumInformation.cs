@@ -10,8 +10,6 @@ using ITorshifyAlbumInformation = Spotify.Client.Infrastructure.Interfaces.IAlbu
 
 using ITorshifyTrack = Spotify.Client.Infrastructure.Interfaces.ITrack;
 
-using Torshify;
-
 namespace Spotify.Client.Spotify.Services
 {
     public class AlbumInformation : NotificationObject, ITorshifyAlbumInformation

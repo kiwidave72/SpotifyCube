@@ -75,20 +75,13 @@
                     TextWrapping="Wrap"
                     VerticalAlignment="Center" />
             </Border>
-          
-            <local:WatermarkTextBox
+            
+            <TextBox
                 x:Name="UserNameTextBox"
                 TabIndex="0"
-                Watermark="Username"
                 Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"
-                Margin="0,0,0,4">
-                <Interactivity:Interaction.Behaviors>
-                    <Behaviors:KeyboardBehavior
-                        Key="Enter"
-                        Command="{Binding LoginCommand}"
-                        CommandParameter="{Binding ElementName=_passwordBox}" />
-                </Interactivity:Interaction.Behaviors>
-            </local:WatermarkTextBox>
+                Margin="0,0,0,4"/>
+
             <PasswordBox
                 x:FieldModifier="private"
                 TabIndex="1"

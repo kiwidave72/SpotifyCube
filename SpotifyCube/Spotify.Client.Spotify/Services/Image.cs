@@ -3,7 +3,6 @@ using System;
 using Microsoft.Practices.Prism.ViewModel;
 
 using ITorshifyImage = Spotify.Client.Infrastructure.Interfaces.IImage;
-using Torshify;
 
 namespace Spotify.Client.Spotify.Services
 {

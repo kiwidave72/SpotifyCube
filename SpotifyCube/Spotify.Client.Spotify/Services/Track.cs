@@ -10,7 +10,6 @@ using ITorshifyAlbum = Spotify.Client.Infrastructure.Interfaces.IAlbum;
 using ITorshifyArtist = Spotify.Client.Infrastructure.Interfaces.IArtist;
 
 using ITorshifyTrack = Spotify.Client.Infrastructure.Interfaces.ITrack;
-using Torshify;
 
 namespace Spotify.Client.Spotify.Services
 {

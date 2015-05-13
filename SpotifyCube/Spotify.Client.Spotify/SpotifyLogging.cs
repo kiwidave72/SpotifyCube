@@ -1,5 +1,5 @@
 using Microsoft.Practices.Prism.Logging;
-using Torshify;
+
 using Spotify.Client.Infrastructure.Interfaces;
 
 namespace Spotify.Client.Spotify
