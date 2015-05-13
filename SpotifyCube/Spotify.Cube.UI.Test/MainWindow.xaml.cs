@@ -93,28 +93,7 @@ namespace Spotify.Cube.UI.Test
 
                 playerController = new PlayerController(Session, Player, Application.Current.Dispatcher, logging, null);
 
-                var playlist =new Playlist( Session.PlaylistContainer.Playlists[0],Application.Current.Dispatcher);
-
-
-                Console.WriteLine(playlist.Name);
-
-                var tracklist = new List<Spotify.Client.Infrastructure.Interfaces.ITrack>();
-
-                foreach (ITrack track in playlist.InternalPlaylist.Tracks)
-                {
-                   // var native =new  NativeTrack
-
-                    var thetrack = new Track(track, Application.Current.Dispatcher);
-                    //thetrack.InternalTrack.Load();
-
-                    if (thetrack.IsAvailable)
-                         tracklist.Add(thetrack);
-
-                }
-
-                playerController.Playlist.Set(tracklist);
-
-                playerController.Play();
+                Session.PlaylistContainer.Loaded += PlaylistContainer_Loaded;
 
                 //var provider = new SearchProvider(Session, Application.Current.Dispatcher);
 
@@ -133,6 +112,32 @@ namespace Spotify.Cube.UI.Test
             //_logInEvent.Set();
         }
 
+        void PlaylistContainer_Loaded(object sender, EventArgs e)
+        {
+
+            var playlistitem = Session.PlaylistContainer.Playlists.Single(i => i.Name == "Rock Classics");
+ 
+            var playlist = new Playlist(playlistitem, Application.Current.Dispatcher);
+ 
+            Console.WriteLine(playlist.Name);
+
+            var tracklist = new List<Spotify.Client.Infrastructure.Interfaces.ITrack>();
+
+            foreach (ITrack track in playlist.InternalPlaylist.Tracks)
+            {
+  
+                var thetrack = new Track(track, Application.Current.Dispatcher);
+   
+                if (thetrack.IsAvailable)
+                    tracklist.Add(thetrack);
+
+            }
+
+            playerController.Playlist.Set(tracklist);
+
+            playerController.Play();
+        }
+
         private void OnSearchFinishedLoading(object sender, EventArgs e)
         {
             Spotify.Client.Infrastructure.Interfaces.ISearch search = (Spotify.Client.Infrastructure.Interfaces.ISearch)sender;
@@ -140,15 +145,9 @@ namespace Spotify.Cube.UI.Test
             playerController = new PlayerController(Session, Player, Application.Current.Dispatcher, logging, null);
 
             var album = search.Albums[0];
-           
-
-
+   
             Console.WriteLine(album.Name);
-            
-            //var tracks = album.Tracks;
-            //playerController.Playlist.Set(new Spotify.Client.Spotify.Services.PlayList (album.Track));
-            //playerController.Play();
-        
+         
         }
 
 
@@ -159,6 +158,8 @@ namespace Spotify.Cube.UI.Test
                 Console.WriteLine("Connection error: " + e.Message, ConsoleColor.Red);
             }
         }
+        
+        
         private void OnLoginComplete(object sender, SessionEventArgs e)
         {
             Console.WriteLine(Session.ConnectionState);
