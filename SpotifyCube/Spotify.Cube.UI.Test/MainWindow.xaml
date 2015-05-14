@@ -21,6 +21,8 @@
                 <TextBox Text="{Binding Volume}"></TextBox>
             </StackPanel>
 
+            
+
             <StackPanel Orientation="Horizontal">
                 <Label>Gesture</Label>
                 <TextBox Text="{Binding Gesture}"></TextBox>

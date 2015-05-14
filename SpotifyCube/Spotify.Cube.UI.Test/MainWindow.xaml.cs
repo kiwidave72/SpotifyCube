@@ -95,7 +95,6 @@ namespace Spotify.Cube.UI.Test
 
 
 
-
             view.model.GestureChanged += model_GestureChanged;
 
         }
@@ -112,6 +111,7 @@ namespace Spotify.Cube.UI.Test
 
                 view.Volume = (float) e.Value;
                 playerController.Volume = (float) e.Value ;
+                Console.WriteLine("playerController.Volume ->", playerController.Volume);
 
             }
             else if (e.Gesture == "Default Volume")
