@@ -90,35 +90,18 @@ namespace Spotify.Cube.Library
             {
                 OnGestureChange(new CubeGestureEventArgs("Play/Stop"));
 
-                //if (recordingAcl)
-                //{
-                //    //historyAcl.Add(z);
-                
-                //    //OnAngleAclChanged(new CubeAclEventArgs(x, y, z));
-                //}
-                //else
-                //{
-                //    //historyAcl = new List<double>();
-                
-                //    recordingAcl = true;
-
-                //    OnGestureChange(new CubeGestureEventArgs("Play/Stop"));
-
-                    
-
-                //}
-
+                return;
             }
 
-            
+            if (x > 2 || x < -2)
+            {
+                OnGestureChange(new CubeGestureEventArgs("Shuffle"));
 
-            
-
+                return;
+            }
 
 
         }
-
-
 
         private void OnAngleAclChanged(CubeAclEventArgs e)
         {

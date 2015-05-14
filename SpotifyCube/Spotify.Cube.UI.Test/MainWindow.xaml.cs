@@ -129,6 +129,18 @@ namespace Spotify.Cube.UI.Test
                 return;
             }
 
+            else if (CanChangePlayState == true && e.Gesture == "Shuffle" && playerController.IsPlaying)
+            {
+                playerController.Playlist.Shuffle=true;
+
+                playerController.Playlist.Next();
+                
+                playsleeper.Enabled = true;
+                CanChangePlayState = false;
+
+                return;
+            }
+
             else if (e.Gesture == "Volume" && playerController != null)
             {
 
@@ -186,13 +198,14 @@ namespace Spotify.Cube.UI.Test
         {
 
             var playlistitem = Session.PlaylistContainer.Playlists.Single(i => i.Name == "Rock Classics");
-
+            
             var playlist = new Playlist(playlistitem, Application.Current.Dispatcher);
 
             Console.WriteLine(playlist.Name);
 
             var tracklist = new List<Spotify.Client.Infrastructure.Interfaces.ITrack>();
 
+            
             foreach (ITrack track in playlist.InternalPlaylist.Tracks)
             {
 

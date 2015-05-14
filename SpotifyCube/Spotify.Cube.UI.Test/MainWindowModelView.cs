@@ -125,7 +125,7 @@ namespace Cube.Test
 
                 if (model != null)
                 {
-                    model.NewAcl(0, 0, Convert.ToDouble(splitArray[splitArray.Count() - 1]));
+                    model.NewAcl(Convert.ToDouble(splitArray[splitArray.Count() - 5]), 0, Convert.ToDouble(splitArray[splitArray.Count() - 1]));
 
                     model.NewAngle(Convert.ToDouble(splitArray[1]), 0, 0);
                     

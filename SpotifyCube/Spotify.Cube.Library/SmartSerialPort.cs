@@ -86,7 +86,7 @@ namespace Cube.Labrary
             {
                 try
                 {
-                    if (_serialPort.IsOpen == false)
+                    if (_serialPort !=null && _serialPort.IsOpen == false)
                     {
                         return;
                     }
