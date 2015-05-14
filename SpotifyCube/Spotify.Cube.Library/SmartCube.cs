@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Spotify.Cube.Library
 {
-
     public delegate void CubeAngleChangedEventHandler(object sender, CubeAngleEventArgs e);
     public delegate void CubeAclChangedEventHandler(object sender, CubeAclEventArgs e);
 
@@ -12,6 +11,7 @@ namespace Spotify.Cube.Library
 
     public class SmartCube
     {
+        private double OldXRotation { get; set; }
 
         public event CubeAngleChangedEventHandler Changed;
 
@@ -30,13 +30,36 @@ namespace Spotify.Cube.Library
                 Changed(this, e);
         }
 
-        public void NewAngle(int x,int y,int z)
+        public void NewAngle(double x,double y,double z)
         {
             //did we start rotating for volumne
-            //qW: 13491.0000 qX: 500.0000 qY: 694.0000 qZ: -9257.0000 accelY: 0.0800 accelX: -0.0600 accelZ: 0.1700
-            
-            
-            OnAngleChanged(new CubeAngleEventArgs(x,y,z) );
+            //X: 0 Y: -5.19 Z: -2.94 accelY: 0.0100 accelX: 0.0000 accelZ: 0.1400
+            if ((OldXRotation < 10 && x > 350) || (OldXRotation >350 && x < 10))
+            {
+                //the rotation rolled over a threshold
+                return;
+            }
+
+            if (x > OldXRotation + 10)
+            {
+                x = OldXRotation + 10;
+            }
+            else if (x < OldXRotation - 10)
+            {
+                x = OldXRotation - 10;
+            }
+
+            var change = x - OldXRotation;
+
+            if (change < 5)
+            {
+                //tolerance value
+                return;
+            }
+
+            OnGestureChange(new CubeGestureEventArgs("Volume", change));
+            //OnAngleChanged(new CubeAngleEventArgs(x,y,z) );
+            OldXRotation = x;
         }
 
         public void NewAcl(double x, double y, double z)
@@ -90,10 +113,17 @@ namespace Spotify.Cube.Library
     {
         public string Gesture { get; private set; }
 
+        public double Value { get; private set; }
+
         public CubeGestureEventArgs(string  gesture)
         {
             Gesture = gesture;
-            
+        }
+
+        public CubeGestureEventArgs(string gesture, double value)
+        {
+            Gesture = gesture;
+            Value = value;
         }
     }
 

@@ -77,12 +77,13 @@ namespace Spotify.Cube.UI.Test
             Session.LoginComplete += UserLoggedIn;
             Session.ConnectionError += ConnectionError;
 
-           Session.Login("kiwidave72", "", false);
+            #region
+            Session.Login("masticles", "", false);
+            #endregion
 
-         
 
 
-           
+
 
 
         }

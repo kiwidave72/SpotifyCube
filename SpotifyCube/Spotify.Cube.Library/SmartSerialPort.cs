@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Cube.Labrary
 
     public static class SmartSerialPort
     {
+        private const bool _testMode = true;
 
         public static string PortName { get; set; }
 
@@ -28,6 +30,8 @@ namespace Cube.Labrary
         public static bool IsSerialPortOpen { get; set; }
 
         public static SerialPort _serialPort { get; set; }
+
+        public static TestSerialPort _testSerialPort { get; set; }
 
         public static Thread readThread = new Thread(Read);
 
@@ -51,8 +55,16 @@ namespace Cube.Labrary
 
             _continue = true;
 
-            ConnectPort();
-              
+            if (_testMode)
+            {
+                ConnectTestPort();
+            }
+            else
+            {
+                ConnectPort();
+            }
+
+
             readThread.Start();
 
         }
@@ -63,8 +75,7 @@ namespace Cube.Labrary
             {
                 try
                 {
-
-                    string line = _serialPort.ReadLine();
+                    string line = _testMode ? _testSerialPort.ReadLine() : _serialPort.ReadLine();
 
                     var args = new SmartSerialPortEventArgs();
 
@@ -121,6 +132,40 @@ namespace Cube.Labrary
                 }
  
         }
- 
+
+        public static void ConnectTestPort()
+        {
+            try
+            {
+                _testSerialPort = new TestSerialPort();
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+            }
+            catch (IOException ex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+    }
+
+    public class TestSerialPort : SerialPort
+    {
+        private readonly StreamReader _filestream;
+        public new bool IsOpen { get; set; }
+
+        public TestSerialPort()
+        {
+            _filestream = new StreamReader("../../../Spotify.Cube.Library/res/TestInput.txt");
+        }
+
+        public string ReadLine()
+        {
+            return _filestream.ReadLine();
+        }
     }
 }
