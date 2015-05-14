@@ -223,9 +223,13 @@ namespace Spotify.Cube.UI.Test
 
             playerController.Playlist.Set(tracklist);
 
+            playerController.Playlist.Next();
+
             var currenttrack = playerController.Playlist.Current.Track;
 
             view.TrackTitle = currenttrack.Name;
+
+            //view.ArtistsTitle = currenttrack.Artists;
 
 
         }
