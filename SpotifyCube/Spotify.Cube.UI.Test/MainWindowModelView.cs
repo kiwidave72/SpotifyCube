@@ -30,6 +30,7 @@ namespace Cube.Test
 
         private string _serialMessage;
         private string _gesture;
+        private float _defaultVolume;
 
         public SmartCube model { get; set; }
  
@@ -37,6 +38,8 @@ namespace Cube.Test
          
         public MainWindowModelView ()
         {
+
+            DefaultVolume = 25;
 
             SmartSerialPort.Init();
 
@@ -126,6 +129,15 @@ namespace Cube.Test
 
          }
 
+        public float DefaultVolume
+        {
+            get { return _defaultVolume; }
+            set
+            {
+                _defaultVolume = value;
+                OnPropertyChanged("DefaultVolume");
+            }
+        }
 
         public int X_Angle
         {
