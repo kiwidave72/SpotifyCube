@@ -96,6 +96,9 @@ namespace Cube.Labrary
 
                     var args = new SmartSerialPortEventArgs();
 
+                    if (line.Length < 100)
+                        return;
+
                     args.Message = line;
 
                     OnMessageChanged(args);

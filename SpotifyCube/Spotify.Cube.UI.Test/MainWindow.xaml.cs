@@ -110,19 +110,6 @@ namespace Spotify.Cube.UI.Test
             else if (e.Gesture == "Volume" && playerController != null)
             {
 
-                //var percent = 360 / 100 * (float)(e.Value);
-
-                //playerController.Volume =  playerController.Volume  + percent ;
-                
-                //view.Volume = playerController.Volume;
-
-                //if (playerController.Volume < 0)
-                //{
-                
-                //    Console.WriteLine("volume has be set to < 0 ????");
-                //}
-
-                //var percent = 360 / 100 * (float)(e.Value);
                 view.Volume = (float) e.Value;
                 playerController.Volume = (float) e.Value ;
 

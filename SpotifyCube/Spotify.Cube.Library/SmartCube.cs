@@ -55,15 +55,6 @@ namespace Spotify.Cube.Library
                 return;
             }
 
-            //if (x > OldXRotation + 10)
-            //{
-            //    x = OldXRotation + 10;
-            //}
-            //else if (x < OldXRotation - 10)
-            //{
-            //    x = OldXRotation - 10;
-            //}
-
             var change = x - OldXRotation;
 
             if (Math.Abs(change) < 5)
@@ -72,17 +63,17 @@ namespace Spotify.Cube.Library
                 return;
             }
 
+            // somewhere below we hit 360 (0 deg's) which then drops the volume down to spo
+
             var absValue =Math.Abs(x - defaultValue);
-
-
+            
             var percentage = (absValue / 360) * 100;
 
             OnGestureChange(new CubeGestureEventArgs("Volume", percentage));
 
-            Console.WriteLine(change);
+            Console.WriteLine(string.Format("volume changed -> {0} deg's is {1}%",x,percentage));
             
-
-            //OnAngleChanged(new CubeAngleEventArgs(x,y,z) );
+            
             OldXRotation = x;
         }
 
