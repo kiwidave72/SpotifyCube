@@ -12,6 +12,8 @@ namespace Cube.Test
 {
     public class MainWindowModelView : INotifyPropertyChanged
     {
+        public bool IsInitialized=false;
+
         private int _X_Angle;
         
         private int _Y_Angle;
@@ -41,9 +43,14 @@ namespace Cube.Test
         {
 
             initVolumeSetting = true;
-           
 
-            SmartSerialPort.Init();
+
+            if (SmartSerialPort.Init() == false)
+            {
+                return;
+            }
+            
+            IsInitialized = true;
 
             SmartSerialPort.Changed += SmartSerialPort_Changed; ;
 

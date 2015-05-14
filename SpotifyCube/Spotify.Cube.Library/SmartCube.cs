@@ -23,9 +23,19 @@ namespace Spotify.Cube.Library
         public List<double> historyAcl { get; set; }
         public bool recordingAcl { get; set; }
 
+        private double defaultValue;
+        
         public SmartCube(double currentX)
         {
+            if(currentX <0 )
+            {
+                Console.WriteLine("default x was less than zero");
+                OldXRotation = 0;
+            }
+
             OldXRotation = currentX;
+            defaultValue = currentX;
+
         }
 
         protected virtual void OnAngleChanged(CubeAngleEventArgs e)
@@ -41,6 +51,7 @@ namespace Spotify.Cube.Library
             if ((OldXRotation < 10 && x > 350) || (OldXRotation >350 && x < 10))
             {
                 //the rotation rolled over a threshold
+                Console.WriteLine("over threshold");
                 return;
             }
 
@@ -61,7 +72,16 @@ namespace Spotify.Cube.Library
                 return;
             }
 
-            OnGestureChange(new CubeGestureEventArgs("Volume", change));
+            var absValue =Math.Abs(x - defaultValue);
+
+
+            var percentage = (absValue / 360) * 100;
+
+            OnGestureChange(new CubeGestureEventArgs("Volume", percentage));
+
+            Console.WriteLine(change);
+            
+
             //OnAngleChanged(new CubeAngleEventArgs(x,y,z) );
             OldXRotation = x;
         }

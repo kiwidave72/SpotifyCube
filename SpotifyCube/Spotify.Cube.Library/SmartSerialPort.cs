@@ -48,7 +48,7 @@ namespace Cube.Labrary
                 Changed(null, e);
         }
  
-        public static void Init()
+        public static bool Init()
         {
 
             PortName = "COM8";
@@ -62,10 +62,21 @@ namespace Cube.Labrary
             else
             {
                 ConnectPort();
+
             }
 
+            if (IsConnected)
+            {
+                readThread.Start();
 
-            readThread.Start();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+
 
         }
  
@@ -75,6 +86,12 @@ namespace Cube.Labrary
             {
                 try
                 {
+                    if (_serialPort.IsOpen == false)
+                    {
+                        return;
+                    }
+
+
                     string line = _testMode ? _testSerialPort.ReadLine() : _serialPort.ReadLine();
 
                     var args = new SmartSerialPortEventArgs();
@@ -116,7 +133,6 @@ namespace Cube.Labrary
                     _serialPort.ReadTimeout = 500;
                     _serialPort.WriteTimeout = 500;
 
-                    IsConnected = true;
                     _serialPort.Open();
 
                 }
@@ -129,7 +145,11 @@ namespace Cube.Labrary
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
+                    return;
                 }
+
+                IsConnected = true;
  
         }
 
@@ -138,6 +158,7 @@ namespace Cube.Labrary
             try
             {
                 _testSerialPort = new TestSerialPort();
+                IsConnected = true;
             }
             catch (IndexOutOfRangeException ex)
             {

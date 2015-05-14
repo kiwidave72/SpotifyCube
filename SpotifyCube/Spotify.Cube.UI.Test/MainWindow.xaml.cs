@@ -45,7 +45,7 @@ namespace Spotify.Cube.UI.Test
     {
         ISession Session;
         IPlayer Player;
-        ILoggerFacade logging ;
+        ILoggerFacade logging;
 
         PlayerController playerController;
 
@@ -67,13 +67,18 @@ namespace Spotify.Cube.UI.Test
 
             view = new MainWindowModelView();
 
+            if (view.IsInitialized == false)
+            {
+                return;
+            }
+
             this.DataContext = view;
 
             Player = new NAudioPlayer();
             logging = new Log4NetFacade();
             new SpotifyLogging(Session, logging);
-            
-             
+
+
             Session = SessionFactory.CreateSession(
                     Constants.ApplicationKey,
                     Constants.CacheFolder,
@@ -83,14 +88,14 @@ namespace Spotify.Cube.UI.Test
             Session.LoginComplete += UserLoggedIn;
             Session.ConnectionError += ConnectionError;
 
-            
+
             #region
             Session.Login("kiwidave72", "Yokomo08", false);
             #endregion
 
-            
 
-            
+
+
             view.model.GestureChanged += model_GestureChanged;
 
         }
@@ -102,11 +107,24 @@ namespace Spotify.Cube.UI.Test
             {
                 playerController.Play();
             }
-            else if (e.Gesture == "Volume" && playerController !=null)
+            else if (e.Gesture == "Volume" && playerController != null)
             {
-                playerController.Volume =playerController.Volume  + (float)e.Value;
 
-                view.Volume = playerController.Volume;
+                //var percent = 360 / 100 * (float)(e.Value);
+
+                //playerController.Volume =  playerController.Volume  + percent ;
+                
+                //view.Volume = playerController.Volume;
+
+                //if (playerController.Volume < 0)
+                //{
+                
+                //    Console.WriteLine("volume has be set to < 0 ????");
+                //}
+
+                //var percent = 360 / 100 * (float)(e.Value);
+                view.Volume = (float) e.Value;
+                playerController.Volume = (float) e.Value ;
 
             }
             else if (e.Gesture == "Default Volume")
@@ -150,18 +168,18 @@ namespace Spotify.Cube.UI.Test
         {
 
             var playlistitem = Session.PlaylistContainer.Playlists.Single(i => i.Name == "Rock Classics");
- 
+
             var playlist = new Playlist(playlistitem, Application.Current.Dispatcher);
- 
+
             Console.WriteLine(playlist.Name);
 
             var tracklist = new List<Spotify.Client.Infrastructure.Interfaces.ITrack>();
 
             foreach (ITrack track in playlist.InternalPlaylist.Tracks)
             {
-  
+
                 var thetrack = new Track(track, Application.Current.Dispatcher);
-   
+
                 if (thetrack.IsAvailable)
                     tracklist.Add(thetrack);
 
@@ -178,9 +196,9 @@ namespace Spotify.Cube.UI.Test
             playerController = new PlayerController(Session, Player, Application.Current.Dispatcher, logging, null);
 
             var album = search.Albums[0];
-   
+
             Console.WriteLine(album.Name);
-         
+
         }
 
 
@@ -191,8 +209,8 @@ namespace Spotify.Cube.UI.Test
                 Console.WriteLine("Connection error: " + e.Message, ConsoleColor.Red);
             }
         }
-        
-        
+
+
         private void OnLoginComplete(object sender, SessionEventArgs e)
         {
             Console.WriteLine(Session.ConnectionState);
@@ -241,16 +259,16 @@ namespace Spotify.Cube.UI.Test
                 //playerQueue.Enqueue(list);
 
 
-            
+
                 //playerController.Playlist.Set(playerQueue.Left.FirstOrDefault().Track);
 
                 List<Spotify.Client.Infrastructure.Interfaces.ITrack> tracks = new List<Spotify.Client.Infrastructure.Interfaces.ITrack>();
 
                 for (int i = 0; i < toplistBrowse.Tracks.Count; i++)
                 {
-                    Track track = new Track(toplistBrowse.Tracks[i],Application.Current.Dispatcher);
+                    Track track = new Track(toplistBrowse.Tracks[i], Application.Current.Dispatcher);
 
-                    tracks.Add( track ); 
+                    tracks.Add(track);
 
                 }
 
@@ -283,7 +301,7 @@ namespace Spotify.Cube.UI.Test
         public static ILog BootLogger;
 
 
-       
+
         private void InitializeLogging()
         {
             var fileAppender = new RollingFileAppender();
