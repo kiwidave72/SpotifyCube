@@ -93,7 +93,7 @@ namespace Spotify.Cube.Library
                 return;
             }
 
-            if (x > 2 || x < -2)
+            if (x > 2 || x < -2 || y > 2 || y < -2)
             {
                 OnGestureChange(new CubeGestureEventArgs("Shuffle"));
 
