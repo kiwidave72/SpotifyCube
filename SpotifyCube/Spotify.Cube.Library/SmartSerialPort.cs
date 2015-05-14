@@ -96,12 +96,14 @@ namespace Cube.Labrary
 
                     var args = new SmartSerialPortEventArgs();
 
-                    if (line.Length < 50)
-                        return;
+                    if (line.Length > 63)
+                    {
 
-                    args.Message = line;
+                        args.Message = line;
 
-                    OnMessageChanged(args);
+                        OnMessageChanged(args);
+                    }
+
 
                 }
                 catch (TimeoutException)

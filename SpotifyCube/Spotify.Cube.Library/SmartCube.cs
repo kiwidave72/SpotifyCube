@@ -57,11 +57,11 @@ namespace Spotify.Cube.Library
 
             var change = x - OldXRotation;
 
-            if (Math.Abs(change) < 5)
-            {
-                //tolerance value
-                return;
-            }
+            //if (Math.Abs(change) < 5)
+            //{
+            //    //tolerance value
+            //    return;
+            //}
 
             // somewhere below we hit 360 (0 deg's) which then drops the volume down to spo
 

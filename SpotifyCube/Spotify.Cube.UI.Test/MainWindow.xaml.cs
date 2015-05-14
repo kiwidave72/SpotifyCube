@@ -111,7 +111,7 @@ namespace Spotify.Cube.UI.Test
 
                 view.Volume = (float) e.Value;
                 playerController.Volume = (float) e.Value ;
-                Console.WriteLine("playerController.Volume ->", playerController.Volume);
+                Console.WriteLine( string.Format("playerController.Volume -> {0}", playerController.Volume));
 
             }
             else if (e.Gesture == "Default Volume")
