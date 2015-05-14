@@ -1,0 +1,126 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Ports;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Cube.Labrary
+{
+    public delegate void SerialMessageChangedEventHandler(object sender, SmartSerialPortEventArgs e);
+
+    public class SmartSerialPortEventArgs : EventArgs
+    {
+
+        public string Message { get; set; }
+    }
+
+    public static class SmartSerialPort
+    {
+
+        public static string PortName { get; set; }
+
+        public static bool IsConnected { get; set; }
+
+        public static bool IsSerialPortOpen { get; set; }
+
+        public static SerialPort _serialPort { get; set; }
+
+        public static Thread readThread = new Thread(Read);
+
+        private static bool _continue;
+        
+        public static string readLine { get; set; }
+
+
+        public static event SerialMessageChangedEventHandler Changed;
+
+        public static void OnMessageChanged(SmartSerialPortEventArgs e)
+        {
+            if (Changed != null)
+                Changed(null, e);
+        }
+ 
+        public static void Init()
+        {
+
+            PortName = "COM8";
+
+            _continue = true;
+
+            ConnectPort();
+              
+            readThread.Start();
+
+        }
+ 
+        public static void Read()
+        {
+            while (_continue)
+            {
+                try
+                {
+
+                    string line = _serialPort.ReadLine();
+
+                    var args = new SmartSerialPortEventArgs();
+
+                    args.Message = line;
+
+                    OnMessageChanged(args);
+
+                }
+                catch (TimeoutException)
+                {
+                }
+                catch (InvalidOperationException)
+                {
+                }
+
+            }
+        }
+ 
+        private static void ConnectPort()
+        {
+                 try
+                {
+                    _serialPort = new SerialPort();
+                    IsSerialPortOpen = _serialPort.IsOpen;
+
+
+                    foreach (string s in SerialPort.GetPortNames())
+                    {
+                        Debug.WriteLine("   {0}", s);
+                    }
+
+                    _serialPort.PortName = PortName; //SerialPort.GetPortNames()[1];
+                    _serialPort.BaudRate = 9600;
+                    _serialPort.Parity = Parity.None;
+                    _serialPort.DataBits = 8;
+                    _serialPort.StopBits = StopBits.One;
+                    _serialPort.Handshake = Handshake.None;
+                    _serialPort.ReadTimeout = 500;
+                    _serialPort.WriteTimeout = 500;
+
+                    IsConnected = true;
+                    _serialPort.Open();
+
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                }
+                catch (IOException ex)
+                {
+
+                }
+                catch (Exception ex)
+                {
+                }
+ 
+        }
+ 
+    }
+}

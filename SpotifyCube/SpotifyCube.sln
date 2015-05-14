@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify", "Spotify\Spotify.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify.Cube.UI.Test", "Spotify.Cube.UI.Test\Spotify.Cube.UI.Test.csproj", "{E31B8E19-87B2-44D3-97EC-86F2F9CC16A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spotify.Cube.Library", "Spotify.Cube.Library\Spotify.Cube.Library.csproj", "{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -182,6 +184,26 @@ Global
 		{E31B8E19-87B2-44D3-97EC-86F2F9CC16A1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E31B8E19-87B2-44D3-97EC-86F2F9CC16A1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E31B8E19-87B2-44D3-97EC-86F2F9CC16A1}.Release|x86.ActiveCfg = Release|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.DebugMockEnabled|Any CPU.ActiveCfg = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.DebugMockEnabled|Any CPU.Build.0 = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.DebugMockEnabled|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.DebugMockEnabled|Mixed Platforms.Build.0 = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.DebugMockEnabled|x86.ActiveCfg = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.DebugVerbose|Any CPU.ActiveCfg = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.DebugVerbose|Any CPU.Build.0 = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.DebugVerbose|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.DebugVerbose|Mixed Platforms.Build.0 = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.DebugVerbose|x86.ActiveCfg = Debug|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{648D75B8-EEBA-41D7-A2A9-A8E7C948B6FD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
