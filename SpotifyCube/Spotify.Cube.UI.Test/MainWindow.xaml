@@ -10,9 +10,14 @@
             <TextBox Text="{Binding Z_Angle}"></TextBox>
             <TextBox Text="{Binding Z_Acel}"></TextBox>
 
-
             <StackPanel Orientation="Horizontal">
-                <Label>Gesture</Label>
+                <Label>Default Volume</Label>
+                <TextBox Text="{Binding DefaultVolume}"></TextBox>
+            </StackPanel>
+
+            
+            <StackPanel Orientation="Horizontal">
+                <Label>Volume</Label>
                 <TextBox Text="{Binding Volume}"></TextBox>
             </StackPanel>
 
