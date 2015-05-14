@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -48,6 +49,12 @@ namespace Spotify.Cube.UI.Test
 
         PlayerController playerController;
 
+        private MainWindowModelView view;
+
+        private float DefaultVolume;
+        public bool DefaultVolumeSet { get; set; }
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -55,13 +62,12 @@ namespace Spotify.Cube.UI.Test
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MainWindowModelView view = new MainWindowModelView();
-
-            this.DataContext = view;
-
 
             InitializeLogging();
 
+            view = new MainWindowModelView();
+
+            this.DataContext = view;
 
             Player = new NAudioPlayer();
             logging = new Log4NetFacade();
@@ -77,16 +83,39 @@ namespace Spotify.Cube.UI.Test
             Session.LoginComplete += UserLoggedIn;
             Session.ConnectionError += ConnectionError;
 
+            
             #region
-            Session.Login("masticles", "", false);
+            Session.Login("kiwidave72", "Yokomo08", false);
             #endregion
 
+            
 
-
-
-
+            
+            view.model.GestureChanged += model_GestureChanged;
 
         }
+
+
+        void model_GestureChanged(object sender, Library.CubeGestureEventArgs e)
+        {
+            if (e.Gesture == "Play/Stop")
+            {
+                playerController.Play();
+            }
+            else if (e.Gesture == "Volume" && playerController !=null)
+            {
+                playerController.Volume =playerController.Volume  + (float)e.Value;
+
+                view.Volume = playerController.Volume;
+
+            }
+            else if (e.Gesture == "Default Volume")
+            {
+                DefaultVolume = (float)e.Value;
+                DefaultVolumeSet = true;
+            }
+        }
+
         private void UserLoggedIn(object sender, SessionEventArgs e)
         {
             if (e.Status == Error.OK)
@@ -95,8 +124,8 @@ namespace Spotify.Cube.UI.Test
 
                 var playListProvider = new PlaylistProvider(Session, Application.Current.Dispatcher, logging);
 
-
                 playerController = new PlayerController(Session, Player, Application.Current.Dispatcher, logging, null);
+                playerController.Volume = DefaultVolume;
 
                 Session.PlaylistContainer.Loaded += PlaylistContainer_Loaded;
 
@@ -140,7 +169,6 @@ namespace Spotify.Cube.UI.Test
 
             playerController.Playlist.Set(tracklist);
 
-            playerController.Play();
         }
 
         private void OnSearchFinishedLoading(object sender, EventArgs e)

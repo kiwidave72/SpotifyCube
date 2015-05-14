@@ -21,7 +21,7 @@ namespace Cube.Labrary
 
     public static class SmartSerialPort
     {
-        private const bool _testMode = true;
+        private const bool _testMode = false;
 
         public static string PortName { get; set; }
 

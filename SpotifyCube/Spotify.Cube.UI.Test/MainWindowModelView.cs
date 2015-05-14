@@ -31,6 +31,7 @@ namespace Cube.Test
         private string _serialMessage;
         private string _gesture;
         private float _defaultVolume;
+        private float _volume;
 
         public SmartCube model { get; set; }
  
@@ -39,20 +40,30 @@ namespace Cube.Test
         public MainWindowModelView ()
         {
 
-            DefaultVolume = 25;
+            initVolumeSetting = true;
+           
 
             SmartSerialPort.Init();
 
             SmartSerialPort.Changed += SmartSerialPort_Changed; ;
- 
-            model = new SmartCube();
+
+        }
+
+        private void InitSmartCube(double currentX)
+        {
+            DefaultVolume =(float) (currentX/360)*100;
+
+            model = new SmartCube(currentX);
 
             model.Changed += cube_Changed;
 
             model.AclChanged += model_AclChanged;
 
             model.GestureChanged += model_GestureChanged;
+
+            model.InitialiseControllerVolume(DefaultVolume);
         }
+
 
         void model_GestureChanged(object sender, CubeGestureEventArgs e)
         {
@@ -89,13 +100,41 @@ namespace Cube.Test
         {
 
             SerialMessage = e.Message;
+            try
+            {
+                var splitArray = e.Message.Split(' ');
 
-            var splitArray = e.Message.Split(' ');
+
+                if (initVolumeSetting)
+                {
+                    InitSmartCube(Convert.ToDouble(splitArray[1])); 
+                    
+                    
+
+                    initVolumeSetting = false;
+                    
+                    return;
+                }
+
+                if (model != null)
+                {
+                    model.NewAcl(0, 0, Convert.ToDouble(splitArray[splitArray.Count() - 1]));
+
+                    model.NewAngle(Convert.ToDouble(splitArray[1]), 0, 0);
+                    
+                }
+
+            }
+            catch (System.FormatException )
+            {
+                
+                Console.WriteLine("Bad data");
+            }
 
 
-            model.NewAcl(0, 0, Convert.ToDouble(splitArray[splitArray.Count() - 1]));
-            model.NewAngle(Convert.ToDouble(splitArray[1]), 0, 0);
         }
+
+        public bool initVolumeSetting    { get; set; }
 
         public string SerialMessage 
         { 
@@ -138,6 +177,18 @@ namespace Cube.Test
                 OnPropertyChanged("DefaultVolume");
             }
         }
+
+        public float Volume
+        {
+            get { return _volume; }
+            set
+            {
+                _volume = value;
+                OnPropertyChanged("Volume");
+            }
+            
+        }
+
 
         public int X_Angle
         {
