@@ -47,12 +47,16 @@ namespace Spotify.Cube.Library
         public void NewAngle(double x,double y,double z)
         {
 
+            
+
+
+
             if (x > 1 || x < -1)
             {
 
                 //did we start rotating for volumne
                 //X: 0 Y: -5.19 Z: -2.94 accelY: 0.0100 accelX: 0.0000 accelZ: 0.1400
-                if ((OldXRotation < 10 && x > 350) || (OldXRotation > 350 && x < 10))
+                if ((OldXRotation < 10 && x > 200) || (OldXRotation > 350 && x < 200))
                 {
                     //the rotation rolled over a threshold
                     Console.WriteLine("over threshold");
@@ -69,18 +73,18 @@ namespace Spotify.Cube.Library
 
                 // somewhere below we hit 360 (0 deg's) which then drops the volume down to spo
 
-                var absValue = Math.Abs(x - defaultValue);
+                //var absValue = Math.Abs(x - defaultValue);
 
-                var percentage = (absValue/360)*100;
+                var percentage = (x/360)*100;
 
                 OnGestureChange(new CubeGestureEventArgs("Volume", percentage));
 
                 Console.WriteLine(string.Format("volume changed -> {0} deg's is {1}%", x, percentage));
 
-
+                OldXRotation = x;
             }
 
-            OldXRotation = x;
+            
         }
 
         public void NewAcl(double x, double y, double z)
@@ -93,7 +97,7 @@ namespace Spotify.Cube.Library
                 return;
             }
 
-            if (x > 2 || x < -2 || y > 2 || y < -2)
+            if (x > 3.5 || x < -3.5 || y > 3.5 || y < -3.5)
             {
                 OnGestureChange(new CubeGestureEventArgs("Shuffle"));
 
