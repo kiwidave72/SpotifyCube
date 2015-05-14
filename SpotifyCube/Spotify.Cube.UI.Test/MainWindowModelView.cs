@@ -34,6 +34,7 @@ namespace Cube.Test
         private string _gesture;
         private float _defaultVolume;
         private float _volume;
+        private string _trackTitle;
 
         public SmartCube model { get; set; }
  
@@ -174,6 +175,17 @@ namespace Cube.Test
             Y_Angle = e.Y_Angle;
 
          }
+
+        public string TrackTitle
+        {
+            get { return _trackTitle; }
+            set
+            {
+                _trackTitle = value;
+                OnPropertyChanged("TrackTitle");
+                
+            }
+        }
 
         public float DefaultVolume
         {

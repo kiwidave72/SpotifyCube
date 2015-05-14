@@ -116,6 +116,7 @@ namespace Spotify.Cube.UI.Test
                 CanChangePlayState = false;
                 playsleeper.Enabled = true;
 
+
                 return;
 
             }
@@ -137,6 +138,10 @@ namespace Spotify.Cube.UI.Test
                 
                 playsleeper.Enabled = true;
                 CanChangePlayState = false;
+                
+                var track = playerController.Playlist.Current.Track;
+                
+                view.TrackTitle = track.Name;
 
                 return;
             }
@@ -217,6 +222,11 @@ namespace Spotify.Cube.UI.Test
             }
 
             playerController.Playlist.Set(tracklist);
+
+            var currenttrack = playerController.Playlist.Current.Track;
+
+            view.TrackTitle = currenttrack.Name;
+
 
         }
 
@@ -405,6 +415,11 @@ namespace Spotify.Cube.UI.Test
                 Exception exception = e.Exception;
                 BootLogger.Fatal(exception);
             };
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            
         }
 
     }
