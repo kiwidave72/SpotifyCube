@@ -46,57 +46,67 @@ namespace Spotify.Cube.Library
 
         public void NewAngle(double x,double y,double z)
         {
-            //did we start rotating for volumne
-            //X: 0 Y: -5.19 Z: -2.94 accelY: 0.0100 accelX: 0.0000 accelZ: 0.1400
-            if ((OldXRotation < 10 && x > 350) || (OldXRotation >350 && x < 10))
+
+            if (x > 1 || x < -1)
             {
-                //the rotation rolled over a threshold
-                Console.WriteLine("over threshold");
-                return;
+
+                //did we start rotating for volumne
+                //X: 0 Y: -5.19 Z: -2.94 accelY: 0.0100 accelX: 0.0000 accelZ: 0.1400
+                if ((OldXRotation < 10 && x > 350) || (OldXRotation > 350 && x < 10))
+                {
+                    //the rotation rolled over a threshold
+                    Console.WriteLine("over threshold");
+                    return;
+                }
+
+                var change = x - OldXRotation;
+
+                if (Math.Abs(change) < 5)
+                {
+                    //tolerance value
+                    return;
+                }
+
+                // somewhere below we hit 360 (0 deg's) which then drops the volume down to spo
+
+                var absValue = Math.Abs(x - defaultValue);
+
+                var percentage = (absValue/360)*100;
+
+                OnGestureChange(new CubeGestureEventArgs("Volume", percentage));
+
+                Console.WriteLine(string.Format("volume changed -> {0} deg's is {1}%", x, percentage));
+
+
             }
 
-            var change = x - OldXRotation;
-
-            //if (Math.Abs(change) < 5)
-            //{
-            //    //tolerance value
-            //    return;
-            //}
-
-            // somewhere below we hit 360 (0 deg's) which then drops the volume down to spo
-
-            var absValue =Math.Abs(x - defaultValue);
-            
-            var percentage = (absValue / 360) * 100;
-
-            OnGestureChange(new CubeGestureEventArgs("Volume", percentage));
-
-            Console.WriteLine(string.Format("volume changed -> {0} deg's is {1}%",x,percentage));
-            
-            
             OldXRotation = x;
         }
 
         public void NewAcl(double x, double y, double z)
         {
             // we started moving up for play/stop??
-            if (z > 1 || z < -1)
+            if (z > 2 || z < -2)
             {
-                if (recordingAcl )
-                {
-                    //historyAcl.Add(z);
-                
-                    OnAngleAclChanged(new CubeAclEventArgs(x, y, z));
-                }
-                else
-                {
-                    //historyAcl = new List<double>();
-                
-                    recordingAcl = true;
+                OnGestureChange(new CubeGestureEventArgs("Play/Stop"));
 
-                    OnGestureChange(new CubeGestureEventArgs("Play/Stop"));
+                //if (recordingAcl)
+                //{
+                //    //historyAcl.Add(z);
+                
+                //    //OnAngleAclChanged(new CubeAclEventArgs(x, y, z));
+                //}
+                //else
+                //{
+                //    //historyAcl = new List<double>();
+                
+                //    recordingAcl = true;
 
-                }
+                //    OnGestureChange(new CubeGestureEventArgs("Play/Stop"));
+
+                    
+
+                //}
 
             }
 

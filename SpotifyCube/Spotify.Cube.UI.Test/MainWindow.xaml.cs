@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,6 +55,7 @@ namespace Spotify.Cube.UI.Test
         private float DefaultVolume;
         public bool DefaultVolumeSet { get; set; }
 
+        private System.Timers.Timer playsleeper;
 
         public MainWindow()
         {
@@ -62,6 +64,9 @@ namespace Spotify.Cube.UI.Test
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            playsleeper = new System.Timers.Timer(2000);
+            playsleeper.Elapsed += playsleeper_Elapsed;
+            playsleeper.Enabled = false;
 
             InitializeLogging();
 
@@ -99,18 +104,36 @@ namespace Spotify.Cube.UI.Test
 
         }
 
+        
+      
 
         void model_GestureChanged(object sender, Library.CubeGestureEventArgs e)
         {
-            if (e.Gesture == "Play/Stop")
+            if (CanChangePlayState  == true && e.Gesture == "Play/Stop" && playerController.IsPlaying==false)
             {
                 playerController.Play();
+
+                CanChangePlayState = false;
+                playsleeper.Enabled = true;
+
+                return;
+
             }
+            else if (CanChangePlayState == true &&  e.Gesture == "Play/Stop" && playerController.IsPlaying)
+            {
+                playerController.Pause();
+
+                playsleeper.Enabled = true;
+                CanChangePlayState = false;
+
+                return;
+            }
+
             else if (e.Gesture == "Volume" && playerController != null)
             {
 
                 view.Volume = (float) e.Value;
-                playerController.Volume = (float) e.Value ;
+                playerController.Volume = (float) e.Value / 100 ;
                 Console.WriteLine( string.Format("playerController.Volume -> {0}", playerController.Volume));
 
             }
@@ -119,6 +142,14 @@ namespace Spotify.Cube.UI.Test
                 DefaultVolume = (float)e.Value;
                 DefaultVolumeSet = true;
             }
+        }
+
+        void playsleeper_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            playsleeper.Enabled = false;
+            
+            CanChangePlayState = true;
+
         }
 
         private void UserLoggedIn(object sender, SessionEventArgs e)
@@ -130,7 +161,7 @@ namespace Spotify.Cube.UI.Test
                 var playListProvider = new PlaylistProvider(Session, Application.Current.Dispatcher, logging);
 
                 playerController = new PlayerController(Session, Player, Application.Current.Dispatcher, logging, null);
-                playerController.Volume = DefaultVolume;
+                playerController.Volume = DefaultVolume /100;
 
                 Session.PlaylistContainer.Loaded += PlaylistContainer_Loaded;
 
@@ -286,7 +317,7 @@ namespace Spotify.Cube.UI.Test
         }
 
         public static ILog BootLogger;
-
+        private bool CanChangePlayState=true;
 
 
         private void InitializeLogging()

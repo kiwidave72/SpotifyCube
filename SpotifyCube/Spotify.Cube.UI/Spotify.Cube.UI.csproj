@@ -55,25 +55,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EchoNest-Sharp">
-      <HintPath>..\..\..\..\..\..\Git\SpotifyCube\lib\EchoNest-Sharp\EchoNest-Sharp.dll</HintPath>
+      <HintPath>..\..\lib\EchoNest-Sharp\EchoNest-Sharp.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\..\..\..\..\..\Git\SpotifyCube\lib\Log4Net\log4net.dll</HintPath>
+      <HintPath>..\..\lib\Log4Net\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism">
-      <HintPath>..\..\..\..\..\..\Git\SpotifyCube\lib\Prism\Microsoft.Practices.Prism.dll</HintPath>
+      <HintPath>..\..\lib\Prism\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.Interactivity">
-      <HintPath>..\..\..\..\..\..\Git\SpotifyCube\lib\Prism\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+      <HintPath>..\..\lib\Prism\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.MefExtensions">
-      <HintPath>..\..\..\..\..\..\Git\SpotifyCube\lib\Prism\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
+      <HintPath>..\..\lib\Prism\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.UnityExtensions">
-      <HintPath>..\..\..\..\..\..\Git\SpotifyCube\lib\Prism\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
+      <HintPath>..\..\lib\Prism\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\..\..\..\..\Git\SpotifyCube\lib\Prism\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\..\lib\Prism\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\..\..\..\..\..\Git\SpotifyCube\lib\Unity\Microsoft.Practices.Unity.dll</HintPath>
