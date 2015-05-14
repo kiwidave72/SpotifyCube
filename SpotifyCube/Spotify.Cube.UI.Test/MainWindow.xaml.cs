@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Cube.Test;
 using Spotify.Client.Spotify;
 
 
@@ -55,7 +55,11 @@ namespace Spotify.Cube.UI.Test
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-           
+            MainWindowModelView view = new MainWindowModelView();
+
+            this.DataContext = view;
+
+
             InitializeLogging();
 
 

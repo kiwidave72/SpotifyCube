@@ -79,6 +79,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindowModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -117,6 +118,10 @@
     <ProjectReference Include="..\Spotify.Client.Spotify\Spotify.Client.Spotify.csproj">
       <Project>{9e6a309e-bca4-4197-a19f-ad1d4ec57a38}</Project>
       <Name>Spotify.Client.Spotify</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spotify.Cube.Library\Spotify.Cube.Library.csproj">
+      <Project>{648d75b8-eeba-41d7-a2a9-a8e7c948b6fd}</Project>
+      <Name>Spotify.Cube.Library</Name>
     </ProjectReference>
     <ProjectReference Include="..\Spotify\Spotify.csproj">
       <Project>{fd9c7812-7f81-4e27-95b7-c36f2140ef57}</Project>
