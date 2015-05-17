@@ -223,6 +223,8 @@ namespace Spotify.Cube.UI.Test
 
             playerController.Playlist.Set(tracklist);
 
+            playerController.Playlist.Shuffle = true;
+
             playerController.Playlist.Next();
 
             var currenttrack = playerController.Playlist.Current.Track;
