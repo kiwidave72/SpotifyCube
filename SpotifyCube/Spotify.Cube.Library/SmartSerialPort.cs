@@ -31,7 +31,6 @@ namespace Cube.Labrary
 
         public static SerialPort _serialPort { get; set; }
 
-        public static TestSerialPort _testSerialPort { get; set; }
 
         public static Thread readThread = new Thread(Read);
 
@@ -55,15 +54,7 @@ namespace Cube.Labrary
 
             _continue = true;
 
-            if (_testMode)
-            {
-                ConnectTestPort();
-            }
-            else
-            {
-                ConnectPort();
-
-            }
+            ConnectPort();
 
             if (IsConnected)
             {
@@ -92,7 +83,7 @@ namespace Cube.Labrary
                     }
 
 
-                    string line = _testMode ? _testSerialPort.ReadLine() : _serialPort.ReadLine();
+                    string line = _serialPort.ReadLine();
 
                     var args = new SmartSerialPortEventArgs();
 
@@ -158,40 +149,7 @@ namespace Cube.Labrary
  
         }
 
-        public static void ConnectTestPort()
-        {
-            try
-            {
-                _testSerialPort = new TestSerialPort();
-                IsConnected = true;
-            }
-            catch (IndexOutOfRangeException ex)
-            {
-            }
-            catch (IOException ex)
-            {
-
-            }
-            catch (Exception ex)
-            {
-            }
-        }
 
     }
 
-    public class TestSerialPort : SerialPort
-    {
-        private readonly StreamReader _filestream;
-        public new bool IsOpen { get; set; }
-
-        public TestSerialPort()
-        {
-            _filestream = new StreamReader("../../../Spotify.Cube.Library/res/TestInput.txt");
-        }
-
-        public string ReadLine()
-        {
-            return _filestream.ReadLine();
-        }
-    }
 }

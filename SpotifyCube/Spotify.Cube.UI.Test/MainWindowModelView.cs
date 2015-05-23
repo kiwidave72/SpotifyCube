@@ -31,9 +31,13 @@ namespace Cube.Test
 
 
         private string _serialMessage;
+
         private string _gesture;
+        
         private float _defaultVolume;
+        
         private float _volume;
+        
         private string _trackTitle;
 
         public SmartCube model { get; set; }
@@ -116,8 +120,6 @@ namespace Cube.Test
                 if (initVolumeSetting)
                 {
                     InitSmartCube(Convert.ToDouble(splitArray[1])); 
-                    
-                    
 
                     initVolumeSetting = false;
                     
@@ -161,7 +163,6 @@ namespace Cube.Test
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
             {
-                //Console.WriteLine(propertyName);
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }

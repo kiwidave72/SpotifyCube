@@ -23,7 +23,6 @@ namespace Spotify.Cube.Library
         public List<double> historyAcl { get; set; }
         public bool recordingAcl { get; set; }
 
-        private double defaultValue;
         
         public SmartCube(double currentX)
         {
@@ -34,7 +33,6 @@ namespace Spotify.Cube.Library
             }
 
             OldXRotation = currentX;
-            defaultValue = currentX;
 
         }
 
@@ -46,10 +44,6 @@ namespace Spotify.Cube.Library
 
         public void NewAngle(double x,double y,double z)
         {
-
-            
-
-
 
             if (x > 1 || x < -1)
             {
