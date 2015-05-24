@@ -19,9 +19,13 @@ namespace Spotify.Cube.Library
 
         public double OutputValue { get; set; }
 
-        public double LockedOuputValue { get; set; }
+        public double LockedOutputValue { get; set; }
 
         public double LockedInputValue  { get; set; }
+
+        public double NormalizeInputValue { get; set; }
+
+        public double NormalizeOutputValue { get; set; }
 
         public SmartAngle(double minInputValue, double maxInputValue, double minOutputValue, double maxOutputValue)
         {
@@ -37,11 +41,11 @@ namespace Spotify.Cube.Library
             
         }
 
-        public void LockWith(double volume, double cubeAngle)
+        public void LockWith(double lockedInputValue, double lockedOutputValue)
         {
-            LockedInputValue = volume;
+            LockedInputValue = lockedInputValue;
 
-            LockedOuputValue = cubeAngle;
+            LockedOutputValue = lockedOutputValue;
 
         }
 
@@ -50,28 +54,67 @@ namespace Spotify.Cube.Library
 
             var pctOfMaxRange = (double)1 / (double)MaxInputValue;
 
-            var normalizedInputValue= NormalizeInputValue(inputvalue);
+            var normalizedInputValue= NormalizeInput(inputvalue);
 
-            double value = normalizedInputValue * pctOfMaxRange;
+            if (normalizedInputValue != LockedInputValue)
+            {
+                double value = normalizedInputValue * pctOfMaxRange;
 
-            var outputValue = Math.Round(value * MaxOutputValue);
+                var outputValue = Math.Round(value * MaxOutputValue);
 
-            var normalizedOutputValue = NormalizeOuputValue(outputValue);
+                var normalizedOutputValue = NormalizeOutput(outputValue);
 
-            OutputValue = normalizedOutputValue;
+                OutputValue = normalizedOutputValue;
+                
+            }
+            else
+            {
+                OutputValue = LockedOutputValue;
+            }
 
         }
 
-        private double NormalizeInputValue(double inputvalue)
+        private double NormalizeInput(double inputvalue)
         {
-            return inputvalue;
+            if (inputvalue == LockedInputValue)
+            {
+                NormalizeInputValue = 0;
+            }
+
+            if (inputvalue > LockedInputValue)
+            {
+                NormalizeInputValue = inputvalue - LockedInputValue;   
+                    
+            }
+            else
+            {
+                NormalizeInputValue = LockedInputValue - inputvalue;
+            }
+
+            return NormalizeInputValue;
         }
 
-        private double NormalizeOuputValue(double outputvalue)
+        private double NormalizeOutput(double outputvalue)
         {
-            return outputvalue;
-        }
 
+            if (outputvalue == LockedOutputValue)
+            {
+                NormalizeOutputValue = 0;
+            }
+
+            if (outputvalue > LockedOutputValue)
+            {
+                NormalizeOutputValue  =outputvalue - LockedOutputValue;
+
+            }
+            else 
+            {
+                NormalizeOutputValue  = LockedOutputValue - outputvalue;
+            }
+
+            return NormalizeOutputValue;
+
+        }
     }
 
 
