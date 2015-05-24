@@ -10,8 +10,18 @@ namespace Spotify.Cube.Library.Unit.Tests
          
 
         [Theory]
-        [InlineData(0, 360, 0, 100, 180 , 180, 50, 0)]
-        [InlineData(0, 360, 0, 100, 360 , 180, 50, 50)]
+
+        [InlineData(0, 360, 0, 100, 0, 180, 0, 0)]
+        [InlineData(0, 360, 0, 100, 180, 180, 0, 0)]
+        [InlineData(0, 360, 0, 100, 360 , 180, 0, 50)]
+        [InlineData(0, 360, 0, 100, 360, 180, 25, 75)]
+        [InlineData(0, 360, 0, 100, 360, 180, 75, 100)]
+
+        [InlineData(0, 360, 0, 100, 0, 180, 50, 0)]
+        [InlineData(0, 360, 0, 100, 90, 180, 50, 25)]
+        [InlineData(0, 360, 0, 100, 180, 180, 50, 50)]
+        [InlineData(0, 360, 0, 100, 270, 180, 50, 75)]
+        [InlineData(0, 360, 0, 100, 360, 180, 50, 100)]
 
         public void for_complex_locked_inputs_we_get_the_right_output(double minInputValue, double maxInputValue, double minOutputValue, double maxOutputValue, double inputValue, double lockedInputValue, double lockedOutputValue, double expectedOutputValue)
         {

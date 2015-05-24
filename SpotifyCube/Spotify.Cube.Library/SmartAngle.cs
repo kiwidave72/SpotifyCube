@@ -56,64 +56,40 @@ namespace Spotify.Cube.Library
 
             var normalizedInputValue= NormalizeInput(inputvalue);
 
-            if (normalizedInputValue != LockedInputValue)
-            {
-                double value = normalizedInputValue * pctOfMaxRange;
+            double value = normalizedInputValue * pctOfMaxRange;
 
-                var outputValue = Math.Round(value * MaxOutputValue);
+            var outputValue = Math.Round(value * MaxOutputValue);
 
-                var normalizedOutputValue = NormalizeOutput(outputValue);
+            var normalizedOutputValue = NormalizeOutput(outputValue);
 
-                OutputValue = normalizedOutputValue;
+            OutputValue = normalizedOutputValue;
                 
-            }
-            else
-            {
-                OutputValue = LockedOutputValue;
-            }
-
+ 
         }
 
         private double NormalizeInput(double inputvalue)
         {
-            if (inputvalue == LockedInputValue)
-            {
-                NormalizeInputValue = 0;
-            }
-
-            if (inputvalue > LockedInputValue)
-            {
-                NormalizeInputValue = inputvalue - LockedInputValue;   
-                    
-            }
-            else
-            {
-                NormalizeInputValue = LockedInputValue - inputvalue;
-            }
+ 
+            NormalizeInputValue = inputvalue - LockedInputValue;
 
             return NormalizeInputValue;
-        }
+         }
 
         private double NormalizeOutput(double outputvalue)
         {
 
-            if (outputvalue == LockedOutputValue)
-            {
+          
+            NormalizeOutputValue = LockedOutputValue + outputvalue;
+
+            if (NormalizeOutputValue < 0)
                 NormalizeOutputValue = 0;
-            }
 
-            if (outputvalue > LockedOutputValue)
-            {
-                NormalizeOutputValue  =outputvalue - LockedOutputValue;
+            if(NormalizeOutputValue > MaxOutputValue)
+                NormalizeOutputValue = MaxOutputValue;
 
-            }
-            else 
-            {
-                NormalizeOutputValue  = LockedOutputValue - outputvalue;
-            }
-
-            return NormalizeOutputValue;
-
+            
+            return  NormalizeOutputValue;
+ 
         }
     }
 
