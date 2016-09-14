@@ -13,6 +13,7 @@ namespace Cube.Labrary
 {
     public delegate void SerialMessageChangedEventHandler(object sender, SmartSerialPortEventArgs e);
 
+
     public class SmartSerialPortEventArgs : EventArgs
     {
 
@@ -38,6 +39,7 @@ namespace Cube.Labrary
         
         public static string readLine { get; set; }
 
+        public static string ErrorMessage { get; set; }
 
         public static event SerialMessageChangedEventHandler Changed;
 
@@ -50,7 +52,7 @@ namespace Cube.Labrary
         public static bool Init()
         {
 
-            PortName = "COM8";
+            PortName = "COM22";
 
             _continue = true;
 
@@ -64,11 +66,9 @@ namespace Cube.Labrary
             }
             else
             {
+                
                 return false;
             }
-            
-
-
         }
  
         public static void Read()
@@ -99,6 +99,8 @@ namespace Cube.Labrary
                 }
                 catch (TimeoutException)
                 {
+                    _continue = false;
+                    return;
                 }
                 catch (InvalidOperationException)
                 {
@@ -137,11 +139,21 @@ namespace Cube.Labrary
                 }
                 catch (IOException ex)
                 {
+                    Console.WriteLine(ex.Message);
 
+                    ErrorMessage =
+                        "Unable to connect to bluetooth or serial connections, check the port number or that the device is working.";
+
+                    IsConnected = false;
+
+                    return;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+
+                    IsConnected = false;
+
                     return;
                 }
 
@@ -150,6 +162,10 @@ namespace Cube.Labrary
         }
 
 
+        public static void Close()
+        {
+            _serialPort.Close();
+        }
     }
 
 }

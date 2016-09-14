@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Cube.Test;
+using Spotify.Client.Modules.Core.Controls;
+using Spotify.Client.Modules.Core.Views.NowPlaying;
 using Spotify.Client.Spotify;
 
 
@@ -56,14 +60,26 @@ namespace Spotify.Cube.UI.Test
         public bool DefaultVolumeSet { get; set; }
 
         private System.Timers.Timer playsleeper;
+        private DispatcherTimer _backdropDelayDownloadTimer;
+
+        private List<IBackgroundEffect> _backgroundEffects;
 
         public MainWindow()
         {
             InitializeComponent();
+
+          
         }
+
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
+            _backdropDelayDownloadTimer = new DispatcherTimer();
+            _backdropDelayDownloadTimer.Interval = TimeSpan.FromSeconds(1);
+            _backdropDelayDownloadTimer.Tick += OnDelayedBackdropFetchTimerElapsed;
+
             playsleeper = new System.Timers.Timer(2000);
             playsleeper.Elapsed += playsleeper_Elapsed;
             playsleeper.Enabled = false;
@@ -74,6 +90,7 @@ namespace Spotify.Cube.UI.Test
 
             if (view.IsInitialized == false)
             {
+                ErrorMessage.Content = view.ErrorMessage;
                 return;
             }
 
@@ -95,12 +112,11 @@ namespace Spotify.Cube.UI.Test
 
 
             #region
-            Session.Login("kiwidave72", "Yokomo08", false);
+            Session.Login("kiwidave72", "Kyosho08", false);
             #endregion
 
-
-
             view.model.GestureChanged += model_GestureChanged;
+
 
         }
 
@@ -138,10 +154,26 @@ namespace Spotify.Cube.UI.Test
                 
                 playsleeper.Enabled = true;
                 CanChangePlayState = false;
+
+                var currenttrack = playerController.Playlist.Current.Track;
+
+
+                _playlistitem = Session.PlaylistContainer.Playlists.Single(i => i.Name == "Filtr Pop");
+
+                _playlistitem.MetadataUpdated += _playlistitem_MetadataUpdated;
+
+                _playlist = new Playlist(_playlistitem, Application.Current.Dispatcher);
                 
-                var track = playerController.Playlist.Current.Track;
                 
-                view.TrackTitle = track.Name;
+
+
+                GetBackdropForTrack(_playlist.InternalPlaylist.Tracks.SingleOrDefault(i => i.Name == currenttrack.Name));
+
+
+                updatePlaylist();
+
+
+                view.TrackTitle = currenttrack.Name;
 
                 return;
             }
@@ -161,6 +193,27 @@ namespace Spotify.Cube.UI.Test
             }
         }
 
+        void _playlistitem_MetadataUpdated(object sender, EventArgs e)
+        {
+            Console.WriteLine(e);
+        }
+
+        private void updatePlaylist()
+        {
+            var list = playerController.Playlist.Left.ToList();
+
+            var playlist = new ObservableCollection<string>();
+
+            foreach (var playerQueueItem in list)
+            {
+                playlist.Add(playerQueueItem.Track.Name);
+            }
+
+            view.Tracks = playlist;
+
+          
+        }
+
         void playsleeper_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             playsleeper.Enabled = false;
@@ -174,6 +227,7 @@ namespace Spotify.Cube.UI.Test
             if (e.Status == Error.OK)
             {
                 Console.WriteLine("Successfully logged in", ConsoleColor.Yellow);
+
 
                 var playListProvider = new PlaylistProvider(Session, Application.Current.Dispatcher, logging);
 
@@ -192,6 +246,7 @@ namespace Spotify.Cube.UI.Test
             else
             {
                 Console.WriteLine("Unable to log in: " + e.Status.GetMessage(), ConsoleColor.Red);
+                
                 //Console.ReadLine();
                 //Environment.Exit(-1);
             }
@@ -201,8 +256,11 @@ namespace Spotify.Cube.UI.Test
 
         void PlaylistContainer_Loaded(object sender, EventArgs e)
         {
-
-            var playlistitem = Session.PlaylistContainer.Playlists.Single(i => i.Name == "Rock Classics");
+            foreach (var list in Session.PlaylistContainer.Playlists)
+            {
+              Console.WriteLine(list.Name);   
+            }
+            var playlistitem = Session.PlaylistContainer.Playlists.Single(i => i.Name == "Filtr Pop");
             
             var playlist = new Playlist(playlistitem, Application.Current.Dispatcher);
 
@@ -227,12 +285,23 @@ namespace Spotify.Cube.UI.Test
 
             playerController.Playlist.Next();
 
-            var currenttrack = playerController.Playlist.Current.Track;
+
+            updatePlaylist();
+
+            var currenttrack =((IPlayerController) playerController).Playlist.Current.Track;
 
             view.TrackTitle = currenttrack.Name;
 
+            GetBackdropForTrack(playlist.InternalPlaylist.Tracks.SingleOrDefault(i=>i.Name == currenttrack.Name) );
+
             //view.ArtistsTitle = currenttrack.Artists;
 
+
+
+        }
+
+        private void Playlist_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
 
         }
 
@@ -346,7 +415,10 @@ namespace Spotify.Cube.UI.Test
         }
 
         public static ILog BootLogger;
+
         private bool CanChangePlayState=true;
+        private Playlist _playlist;
+        private IContainerPlaylist _playlistitem;
 
 
         private void InitializeLogging()
@@ -425,7 +497,71 @@ namespace Spotify.Cube.UI.Test
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            view.Close();
+        }
+
+
+        private void DisplayBackgroundImage(ImageSource imageSource)
+        {
+            ImageBrush brush = (ImageBrush) BackgroundDropImage.Fill;
+            if (brush == null)
+            {
+                 BackgroundDropImage.Fill = new ImageBrush();
+                  brush = (ImageBrush) BackgroundDropImage.Fill;
+               
+            }
+ 
+            brush.ImageSource = imageSource;
+        }
+
+        private void GetBackdropForTrack(ITrack track)
+        {
+            if (track == null || track.Album == null || track.Album.Artist == null)
+                return;
+
+            var _backdropService = new BackdropService(logging);
+
+            _backdropService.GetBackdrop(
+                track.Album.Artist.Name,
+                backdropFile =>
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        try
+                        {
+                            BitmapImage bitmapImage = new BitmapImage();
+                            bitmapImage.BeginInit();
+                            bitmapImage.DecodePixelHeight = 800;
+                            bitmapImage.StreamSource = new FileStream(
+                                backdropFile,
+                                FileMode.Open,
+                                FileAccess.Read);
+                            bitmapImage.EndInit();
+                            bitmapImage.Freeze();
+
+                            Application.Current.Dispatcher.BeginInvoke(
+                                new Action<ImageSource>(DisplayBackgroundImage), bitmapImage);
+                        }
+                        catch (Exception e)
+                        {
+                            logging.Log(e.ToString(), Category.Exception, Priority.Medium);
+                        }
+                    });
+                },
+                didNotFindBackdrop: () => Application.Current.Dispatcher.BeginInvoke((Action)RemoveKenBurnsEffect,
+                                                                  DispatcherPriority.Background));
+        }
+
+        private void RemoveKenBurnsEffect()
+        {
             
+        }
+
+        private void OnDelayedBackdropFetchTimerElapsed(object sender, EventArgs eventArgs)
+        {
+            _backdropDelayDownloadTimer.Stop();
+            ITrack track = (ITrack)_backdropDelayDownloadTimer.Tag;
+            GetBackdropForTrack(track);
         }
 
     }

@@ -1,8 +1,12 @@
 #include <Wire.h>
+#include <Adafruit_NeoPixel.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
 #include <avr/power.h>
+
+#define BNO055_NEOPIXEL_PIN          6
+
  
 /* This driver reads raw data from the BNO055
 
@@ -14,9 +18,6 @@
    Connect GROUND to common ground
  
 */
-
-int RXLED = 17;  // The RX LED has a defined Arduino pin
-
 
 /* Set the delay between fresh samples */
 #define BNO055_SAMPLERATE_DELAY_MS (200)
@@ -46,6 +47,7 @@ int counter=0;
 String outputbuffer="";
 bool WriteBlankLine = false;
 
+Adafruit_NeoPixel pixels = Adafruit_NeoPixel(1, BNO055_NEOPIXEL_PIN, NEO_GRB + NEO_KHZ800);
  
 /**************************************************************************/
 /*
@@ -54,10 +56,7 @@ bool WriteBlankLine = false;
 /**************************************************************************/
 void setup(void) 
 {
-  delay(10000);
-  
-      Serial.begin(57600);
-      Serial1.begin(57600);
+      Serial1.begin(9600);
     
     inputString.reserve(200);
      
@@ -65,11 +64,11 @@ void setup(void)
     outputMessage.concat("By David Norden aka kiwidave - Spotify Cube - v1.2");
     outputMessage.concat("\r\n");
  
-    Serial.println(outputMessage);
     Serial1.println(outputMessage);
-    pinMode(RXLED, OUTPUT);  // Set RX LED as an output
 
 
+  pixels.begin();
+  pixels.show();
   
     
   /* Initialise the sensor */
@@ -81,7 +80,6 @@ void setup(void)
     outputMessage.concat("\r\n");
     outputMessage.concat("fall back to dummy mode");
  
-    Serial.println(outputMessage);
     Serial1.println(outputMessage);
     No_Gyro=true;
  
@@ -90,6 +88,10 @@ void setup(void)
    
   if(!No_Gyro)
   {  
+    pixels.setPixelColor(0, pixels.Color(255,2550,255)); // Moderately bright red color.
+    
+    pixels.show();
+
      /* Display the current temperature */
     int8_t temp = bno.getTemp();
 
@@ -99,7 +101,6 @@ void setup(void)
     outputMessage.concat(temp);
     outputMessage.concat(" C");
     outputMessage.concat("\r\n");
-    Serial.println(outputMessage);
     Serial1.println(outputMessage);
     
     bno.setExtCrystalUse(true);
@@ -109,9 +110,9 @@ void setup(void)
 
 void sendOutFeatureList()
 {
-  //Serial.println("Cube Features are :");
+  Serial1.println("Cube Features are :");
   
-  //Serial.println("BNO055");
+  Serial1.println("BNO055");
    
 }
 
@@ -123,14 +124,6 @@ void sendOutFeatureList()
 /**************************************************************************/
 void loop(void) 
 {
-  
-
-   //digitalWrite(RXLED, LOW);   // set the LED on
-   //TXLED0; //TX LED is not tied to a normally controlled pin
-   //delay(1000);              // wait for a second
-   //digitalWrite(RXLED, HIGH);    // set the LED off
-   //TXLED1;
-   //delay(1000);              // wait for a second
   
   if (stringComplete) {
     //Serial.println(inputString);
@@ -266,13 +259,9 @@ void loop(void)
    if(WriteBlankLine && outputbuffer!="")
    {
   
-      Serial.print("Counter ");
       Serial1.print("Counter ");
-      
-      Serial.print(counter);
       Serial1.print(counter);
 
-      Serial.print(outputbuffer);
       Serial1.print(outputbuffer);
 
       outputbuffer="";
@@ -280,39 +269,24 @@ void loop(void)
    } 
     // Quaternion data
     imu::Quaternion quat = bno.getQuat();
-    Serial.print("|qW ");
     Serial1.print("|qW ");
-    Serial.print(quat.w(), 4);
     Serial1.print(quat.w(), 4);
-    Serial.print("|qX ");
     Serial1.print("|qX ");
-    Serial.print(quat.y(), 4);
     Serial1.print(quat.y(), 4);
-    Serial.print("|qY ");
     Serial1.print("|qY ");
-    Serial.print(quat.x(), 4);
     Serial1.print(quat.x(), 4);
-    Serial.print("|qZ ");
     Serial1.print("|qZ ");
-    Serial.print(quat.z(), 4); 
     Serial1.print(quat.z(), 4); 
     
     imu::Vector<3> mag = bno.getVector(Adafruit_BNO055::VECTOR_MAGNETOMETER);
     /* Display the floating point data */
-    Serial.print("|magX ");
     Serial1.print("|magX ");
-    Serial.print(mag.x());
     Serial1.print(mag.x());
-    Serial.print("|magY ");
     Serial1.print("|magY ");
-    Serial.print(mag.y());
     Serial1.print(mag.y());
-    Serial.print("|magZ ");
     Serial1.print("|magZ ");
-    Serial.print(mag.z());
     Serial1.print(mag.z());
     
-    Serial.println("");
     Serial1.println("");
     delay(BNO055_SAMPLERATE_DELAY_MS);
  }
@@ -336,19 +310,7 @@ void write_euler(String data)
     WriteBlankLine=true;
 }
 void serialEvent() {
-  while (Serial.available()) {
-    // get the new byte:
-    char inChar = (char)Serial.read();
-    // add it to the inputString:
-    inputString += inChar;
-    // if the incoming character is a newline, set a flag
-    // so the main loop can do something about it:
-    if (inChar == '\n') {
-      stringComplete = true;
-    }
-  }
-  
-   while (Serial1.available()) {
+  while (Serial1.available()) {
     // get the new byte:
     char inChar = (char)Serial1.read();
     // add it to the inputString:
@@ -360,5 +322,4 @@ void serialEvent() {
     }
   }
 }
-
 

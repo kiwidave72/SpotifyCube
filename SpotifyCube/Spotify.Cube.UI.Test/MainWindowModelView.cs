@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -32,6 +33,8 @@ namespace Cube.Test
 
         private string _serialMessage;
 
+        private string _errorMessage;
+
         private string _gesture;
         
         private float _defaultVolume;
@@ -39,6 +42,9 @@ namespace Cube.Test
         private float _volume;
         
         private string _trackTitle;
+
+        private ObservableCollection<string> _tracks;
+ 
 
         public SmartCube model { get; set; }
  
@@ -49,16 +55,26 @@ namespace Cube.Test
 
             initVolumeSetting = true;
 
-
             if (SmartSerialPort.Init() == false)
             {
-                return;
+                IsInitialized = false;
+
+                _errorMessage = SmartSerialPort.ErrorMessage;
+
+                return ;
             }
             
             IsInitialized = true;
 
-            SmartSerialPort.Changed += SmartSerialPort_Changed; ;
+            SmartSerialPort.Changed += SmartSerialPort_Changed; 
 
+            
+
+        }
+
+        public void Close()
+        {
+            SmartSerialPort.Close();
         }
 
         private void InitSmartCube(double currentX)
@@ -73,6 +89,7 @@ namespace Cube.Test
 
             model.GestureChanged += model_GestureChanged;
 
+
             model.InitialiseControllerVolume(DefaultVolume);
         }
 
@@ -82,6 +99,28 @@ namespace Cube.Test
             Gesture = e.Gesture;
 
         }
+
+
+        public ObservableCollection<string> Tracks
+        {
+            get { return _tracks; }
+            set
+            {
+                _tracks = value;
+                OnPropertyChanged("Tracks");
+            }
+        }
+
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged("ErrorMessage");
+            }
+        }
+
 
         public string Gesture {
             get { return _gesture; }
@@ -114,12 +153,12 @@ namespace Cube.Test
             SerialMessage = e.Message;
             try
             {
-                var splitArray = e.Message.Split(' ');
+                var splitArray = e.Message.Split('|');
 
 
                 if (initVolumeSetting)
                 {
-                    InitSmartCube(Convert.ToDouble(splitArray[1])); 
+                    InitSmartCube(Convert.ToDouble(splitArray[2].Split(' ')[1])); 
 
                     initVolumeSetting = false;
                     
@@ -128,9 +167,14 @@ namespace Cube.Test
 
                 if (model != null)
                 {
-                    model.NewAcl(Convert.ToDouble(splitArray[splitArray.Count() - 5]), Convert.ToDouble(splitArray[splitArray.Count() - 3]), Convert.ToDouble(splitArray[splitArray.Count() - 1]));
 
-                    model.NewAngle(Convert.ToDouble(splitArray[1]), 0, 0);
+                    var x = splitArray[5].Split(' ')[1];
+                    var y = splitArray[6].Split(' ')[1];
+                    var z = splitArray[7].Split(' ')[1];
+
+                    model.NewAcl(Convert.ToDouble(x), Convert.ToDouble(y), Convert.ToDouble(z));
+
+                    model.NewAngle(Convert.ToDouble(splitArray[2].Split(' ')[1]), 0, 0);
                     
                 }
 

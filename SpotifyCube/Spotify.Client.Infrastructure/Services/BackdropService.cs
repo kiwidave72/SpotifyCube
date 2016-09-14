@@ -120,7 +120,7 @@ namespace Spotify.Client.Infrastructure.Services
 
         private void ProcessImage(string imageId, string downloadFolder)
         {
-            string url = "http://htbackdrops.com/api/" + ApiKey + "/download/" + imageId + "/intermediate";
+            string url = "http://htbackdrops.org/api/" + ApiKey + "/download/" + imageId + "/intermediate";
 
             try
             {
@@ -158,7 +158,7 @@ namespace Spotify.Client.Infrastructure.Services
                 string replacedSpaces = keywords.Replace(" ", "_");
                 Uri siteUri =
                     new Uri(
-                        "http://htbackdrops.com/api/" + ApiKey + "/searchXML?keywords=" + replacedSpaces + "&limit=2");
+                        "http://htbackdrops.org/api/" + ApiKey + "/searchXML?keywords=" + replacedSpaces + "&limit=2");
 
                 string result = "";
 

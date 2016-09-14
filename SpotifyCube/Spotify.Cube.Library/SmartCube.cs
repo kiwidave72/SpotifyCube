@@ -4,10 +4,12 @@ using System.Collections.Generic;
 namespace Spotify.Cube.Library
 {
     public delegate void CubeAngleChangedEventHandler(object sender, CubeAngleEventArgs e);
+    
     public delegate void CubeAclChangedEventHandler(object sender, CubeAclEventArgs e);
 
     public delegate void CubeGestureChangedEventHandler(object sender, CubeGestureEventArgs e);
 
+    
 
     public class SmartCube
     {
